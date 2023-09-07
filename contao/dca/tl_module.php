@@ -27,10 +27,10 @@ $GLOBALS['TL_DCA']['tl_module']['subpalettes']['swiss_alpine_club_oidc_add_modul
 Controller::loadDataContainer('tl_content');
 
 // Palettes
-PaletteManipulator::create()
-    ->addLegend('sac_sso_login_settings', 'title_legend_legend')
-    ->addField(['swiss_alpine_club_oidc_add_module'], 'sac_sso_login_settings', PaletteManipulator::POSITION_APPEND)
-    ->applyToPalette('login', 'tl_module');
+//PaletteManipulator::create()
+//    ->addLegend('sac_sso_login_settings', 'title_legend_legend')
+//    ->addField(['swiss_alpine_club_oidc_add_module'], 'sac_sso_login_settings', PaletteManipulator::POSITION_APPEND)
+//    ->applyToPalette('login', 'tl_module');
 
 // Fields
 $GLOBALS['TL_DCA']['tl_module']['fields']['swiss_alpine_club_oidc_frontend_login_btn_lbl'] = [
