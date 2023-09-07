@@ -1,5 +1,5 @@
 {
-    "name": "markocupic/swiss-alpine-club-contao-login-client-bundle",
+    "name": "imi/shibboleth-contao-login-client-bundle",
     "description": "Contao SSO Login Client for OIDC Server at Swiss Alpine Club",
     "keywords": [
         "Contao",
