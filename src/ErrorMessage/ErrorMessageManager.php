@@ -17,7 +17,7 @@ namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\ErrorMessage;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
-readonly class ErrorMessageManager
+class ErrorMessageManager
 {
     public function __construct(
         private RequestStack $requestStack,
