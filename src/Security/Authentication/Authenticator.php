@@ -56,14 +56,12 @@ class Authenticator
      * @throws IdentityProviderException
      * @throws JsonException
      */
-    public function authenticateContaoUser(OAuth2Client $oAuth2Client): void
+    public function authenticateContaoUser(array $userData, $contaoScope): void
     {
         $allowedScopes = [
             ContaoCoreBundle::SCOPE_BACKEND,
             ContaoCoreBundle::SCOPE_FRONTEND,
         ];
-
-        $contaoScope = $oAuth2Client->getContaoScope();
 
         if (!\in_array($contaoScope, $allowedScopes, true)) {
             throw new \InvalidArgumentException(sprintf('The Contao Scope must be either "%s" "%s" given.', implode('" or "', $allowedScopes), $contaoScope));

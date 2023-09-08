@@ -42,61 +42,32 @@ class ContaoOAuth2LoginController extends AbstractController
     {
         $this->framework->initialize(ContaoCoreBundle::SCOPE_FRONTEND === $_scope);
 
-        echo"<pre>";
-//        var_dump($_SERVER);
-        var_dump($_SERVER['REDIRECT_unscoped-affiliation']);
-        var_dump($_SERVER['REDIRECT_uid']);
-        var_dump($_SERVER['REDIRECT_sn']);
-        var_dump($_SERVER['REDIRECT_mail']);
-        var_dump($_SERVER['REDIRECT_cn']);
-        die();
-        if (!$request->query->has('code') && $request->isMethod('post')) {
-            // Redirect to OAuth2 login page at https://login.sac-cas.ch/
-            return $this->connectAction($request, $_scope);
+////        var_dump($_SERVER);
+//        var_dump($_SERVER['REDIRECT_unscoped-affiliation']);
+//        var_dump($_SERVER['REDIRECT_uid']);
+//        var_dump($_SERVER['REDIRECT_sn']);
+//        var_dump($_SERVER['REDIRECT_mail']);
+//        var_dump($_SERVER['REDIRECT_cn']);
+        if (!$request->server->has('REDIRECT_unscoped-affiliation')) {
+            throw new \Markocupic\SwissAlpineClubContaoLoginClientBundle\Client\Exception\InvalidStateException('Required field missing');
         }
 
         return $this->getAccessTokenAction($request, $_scope);
     }
 
-    private function connectAction(Request $request, string $_scope): Response
-    {
-        if ($this->enableCsrfTokenCheck) {
-            $this->validateCsrfToken($request->get('REQUEST_TOKEN'));
-        }
-
-        if (!$request->request->has('_target_path')) {
-            return new Response('Invalid request. Target path not found.', Response::HTTP_BAD_REQUEST);
-        }
-
-        if (!$request->request->has('_failure_path')) {
-            return new Response('Invalid request. Failure path not found.', Response::HTTP_BAD_REQUEST);
-        }
-        // Save request params to the session
-        $oAuthClient = $this->oAuth2ClientFactory->createOAuth2Client($_scope);
-        $oAuthClient->setTargetPath(base64_decode($request->request->get('_target_path'), true));
-        $oAuthClient->setFailurePath(base64_decode($request->request->get('_failure_path'), true));
-
-        if (ContaoCoreBundle::SCOPE_FRONTEND === $_scope) {
-            if (!$request->request->has('_module_id')) {
-                return new Response('Invalid request. Module id not found.', Response::HTTP_BAD_REQUEST);
-            }
-            $oAuthClient->setModuleId($request->request->get('_module_id'));
-        }
-
-        return $oAuthClient->redirect();
-    }
-
     private function getAccessTokenAction(Request $request, string $_scope): Response
     {
-        if (!$request->query->has('code') || !$request->query->has('state') || !$request->query->has('session_state')) {
-            return new Response('Invalid request.', Response::HTTP_BAD_REQUEST);
-        }
-
-        $oAuthClient = $this->oAuth2ClientFactory->createOAuth2Client($_scope);
-
         // We have an access token!
         // But the user is still not logged in against the Contao backend/frontend firewall.
-        $oauth2SuccessEvent = new OAuth2SuccessEvent($oAuthClient);
+        $userData = [
+            'group' => $request->server->get('REDIRECT_unscoped-affiliation'),
+            'uid' => $request->server->get('REDIRECT_uid'),
+            'sn' => $request->server->get('REDIRECT_sn'),
+            'mail' => $request->server->get('REDIRECT_mail'),
+            'cn' => $request->server->get('REDIRECT_cn'),
+        ];
+
+        $oauth2SuccessEvent = new OAuth2SuccessEvent($userData, $_scope);
 
         if (!$this->eventDispatcher->hasListeners($oauth2SuccessEvent::NAME)) {
             return new Response('Successful OAuth2 login but no success handler defined.');
@@ -112,12 +83,5 @@ class ContaoOAuth2LoginController extends AbstractController
         // This point should normally not be reached at all,
         // since a successful login will take you to the Contao frontend or backend.
         return new Response('', Response::HTTP_NO_CONTENT);
-    }
-
-    private function validateCsrfToken(string $token): void
-    {
-        if (!$this->isCsrfTokenValid($this->contaoCsrfTokenName, $token)) {
-            throw new InvalidRequestTokenException('Invalid CSRF token. Please reload the page and try again.');
-        }
     }
 }

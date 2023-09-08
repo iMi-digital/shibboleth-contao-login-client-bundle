@@ -14,20 +14,25 @@ declare(strict_types=1);
 
 namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Event;
 
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Client\OAuth2Client;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class OAuth2SuccessEvent extends Event
 {
-    public const NAME = 'sac_oauth2_client.oauth2_success';
+    public const NAME = 'imi_shibboleth_client.auth_success';
 
     public function __construct(
-        private readonly OAuth2Client $oAuth2Client,
+        private readonly array $userData,
+        private readonly string $contaoScope
     ) {
     }
 
-    public function getOAuth2Client(): OAuth2Client
+    public function getUserData(): array
     {
-        return $this->oAuth2Client;
+        return $this->userData;
+    }
+
+    public function getContaoScope(): string
+    {
+        return $this->contaoScope;
     }
 }

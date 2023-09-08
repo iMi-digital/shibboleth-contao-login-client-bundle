@@ -43,5 +43,13 @@
     },
     "extra": {
         "contao-manager-plugin": "Markocupic\\SwissAlpineClubContaoLoginClientBundle\\ContaoManager\\Plugin"
+    },
+    "config": {
+        "allow-plugins": {
+            "contao-components/installer": true,
+            "php-http/discovery": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "contao/manager-plugin": true
+        }
     }
 }

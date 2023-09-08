@@ -42,7 +42,6 @@ class ContaoUser
         private readonly OAuthUserChecker $resourceOwnerChecker,
         private readonly ErrorMessageManager $errorMessageManager,
         private readonly OAuthUser $resourceOwner,
-        private readonly Util $util,
         private readonly string $contaoScope,
     ) {
     }
@@ -201,7 +200,9 @@ class ContaoUser
         if (null !== $objMember) {
             // Correctly format the section ids (the key is important!): e.g. [0 => '4250', 2 => '4252'] -> user is member of two SAC Sektionen/Ortsgruppen
             $arrSectionIdsUserIsAllowed = array_map('strval', $this->resourceOwnerChecker->getAllowedSacSectionIds($this->resourceOwner, ContaoCoreBundle::SCOPE_FRONTEND));
-            $arrSectionIdsAll = array_map('strval', array_keys($this->util->listSacSections()));
+            // FIXME: set sections necessary=
+//            $arrSectionIdsAll = array_map('strval', array_keys($this->util->listSacSections()));
+            $arrSectionIdsAll = [];
             $arrSectionIds = array_filter($arrSectionIdsAll, static fn ($v, $k) => \in_array($v, $arrSectionIdsUserIsAllowed, true), ARRAY_FILTER_USE_BOTH);
 
             // Update member details from JSON payload
