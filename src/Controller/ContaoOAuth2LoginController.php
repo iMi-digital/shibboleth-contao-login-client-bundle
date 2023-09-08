@@ -42,6 +42,14 @@ class ContaoOAuth2LoginController extends AbstractController
     {
         $this->framework->initialize(ContaoCoreBundle::SCOPE_FRONTEND === $_scope);
 
+        echo"<pre>";
+//        var_dump($_SERVER);
+        var_dump($_SERVER['REDIRECT_unscoped-affiliation']);
+        var_dump($_SERVER['REDIRECT_uid']);
+        var_dump($_SERVER['REDIRECT_sn']);
+        var_dump($_SERVER['REDIRECT_mail']);
+        var_dump($_SERVER['REDIRECT_cn']);
+        die();
         if (!$request->query->has('code') && $request->isMethod('post')) {
             // Redirect to OAuth2 login page at https://login.sac-cas.ch/
             return $this->connectAction($request, $_scope);

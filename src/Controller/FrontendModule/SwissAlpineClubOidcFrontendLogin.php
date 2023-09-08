@@ -28,6 +28,8 @@ use JustSteveKing\UriBuilder\Uri;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -37,10 +39,11 @@ class SwissAlpineClubOidcFrontendLogin extends AbstractFrontendModuleController
     public const TYPE = 'swiss_alpine_club_oidc_frontend_login';
 
     public function __construct(
-        private readonly ContaoFramework $framework,
-        private readonly Security $security,
-        private readonly RequestStack $requestStack,
+        private readonly ContaoFramework     $framework,
+        private readonly Security            $security,
+        private readonly RequestStack        $requestStack,
         private readonly TranslatorInterface $translator,
+        private readonly RouterInterface $router,
     ) {
     }
 
@@ -78,7 +81,15 @@ class SwissAlpineClubOidcFrontendLogin extends AbstractFrontendModuleController
             $template->enableCsrfTokenCheck = $systemAdapter->getContainer()->getParameter('sac_oauth2_client.oidc.enable_csrf_token_check');
 
             // Since Contao 4.9 urls are base64 encoded
-            $template->targetPath = $stringUtilAdapter->specialchars(base64_encode($strRedirect));
+            $template->targetPath = '/Shibboleth.sso/Login'; //'$stringUtilAdapter->specialchars(base64_encode($strRedirect));
+
+
+            $redirectRoute = 'swiss_alpine_club_sso_login_frontend';
+            $template->shibbolethLoginUrl = $this->router->generate(
+                $redirectRoute,
+                [],
+                UrlGeneratorInterface::ABSOLUTE_URL,
+            );
 
             $uri = $uriAdapter->fromString($request->getUri());
             $uri->addQueryParam('sso_error', 'true');
@@ -86,7 +97,7 @@ class SwissAlpineClubOidcFrontendLogin extends AbstractFrontendModuleController
 
             $template->login = true;
 
-            $template->btnLbl = empty($model->swiss_alpine_club_oidc_frontend_login_btn_lbl) ? $this->translator->trans('MSC.loginWithSacSso', [], 'contao_default') : $model->swiss_alpine_club_oidc_frontend_login_btn_lbl;
+            $template->btnLbl = empty($model->swiss_alpine_club_oidc_frontend_login_btn_lbl) ? $this->translator->trans('MSC.loginWithShibbolethSso', [], 'contao_default') : $model->swiss_alpine_club_oidc_frontend_login_btn_lbl;
 
             $request = $this->requestStack->getCurrentRequest();
 

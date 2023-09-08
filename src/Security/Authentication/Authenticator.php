@@ -190,7 +190,7 @@ class Authenticator
         // Log in as a Contao backend or frontend user.
         $this->interactiveLogin->login($contaoUser);
 
-        $targetPath = $oAuth2Client->getTargetPath();
+        $targetPath = '/Shibboleth.sso/Login';
 
         // Clear the session
         $oAuth2Client->getSession()->clear();
