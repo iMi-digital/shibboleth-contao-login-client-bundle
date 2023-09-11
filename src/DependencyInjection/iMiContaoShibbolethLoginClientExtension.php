@@ -12,14 +12,14 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\DependencyInjection;
+namespace iMi\ContaoShibbolethLoginClientBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class MarkocupicSwissAlpineClubContaoLoginClientExtension extends Extension
+class iMiContaoShibbolethLoginClientExtension extends Extension
 {
     /**
      * {@inheritdoc}

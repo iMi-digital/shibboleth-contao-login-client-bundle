@@ -12,9 +12,9 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Client;
+namespace iMi\ContaoShibbolethLoginClientBundle\Client;
 
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Client\Provider\ProviderFactory;
+use iMi\ContaoShibbolethLoginClientBundle\Client\Provider\ProviderFactory;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class OAuth2ClientFactory

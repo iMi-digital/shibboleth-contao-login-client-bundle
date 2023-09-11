@@ -38,12 +38,12 @@
     },
     "autoload": {
         "psr-4": {
-            "iMi\\ContaoLoginClientBundle\\": "src/"
+            "iMi\\ContaoShibbolethLoginClientBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "iMi\\ContaoLoginClientBundle\\Tests\\": "tests/"
+            "iMi\\ContaoShibbolethLoginClientBundle\\Tests\\": "tests/"
         }
     },
     "extra": {

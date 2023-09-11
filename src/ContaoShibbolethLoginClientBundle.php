@@ -12,23 +12,23 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle;
+namespace iMi\ContaoShibbolethLoginClientBundle;
 
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\DependencyInjection\MarkocupicSwissAlpineClubContaoLoginClientExtension;
+use iMi\ContaoShibbolethLoginClientBundle\DependencyInjection\iMiContaoShibbolethLoginClientExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class MarkocupicSwissAlpineClubContaoLoginClientBundle extends Bundle
+class ContaoShibbolethLoginClientBundle extends Bundle
 {
     public function getPath(): string
     {
         return \dirname(__DIR__);
     }
 
-    public function getContainerExtension(): MarkocupicSwissAlpineClubContaoLoginClientExtension
+    public function getContainerExtension(): iMiContaoShibbolethLoginClientExtension
     {
         // Set alias sac_oauth2_client
-        return new MarkocupicSwissAlpineClubContaoLoginClientExtension();
+        return new iMiContaoShibbolethLoginClientExtension();
     }
 
     /**

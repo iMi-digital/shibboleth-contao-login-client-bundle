@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Client\Exception;
+namespace iMi\ContaoShibbolethLoginClientBundle\Client\Exception;
 
 /**
  * Thrown if the "state" is invalid after the auth code redirect.

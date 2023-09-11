@@ -12,13 +12,14 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Controller;
+namespace iMi\ContaoShibbolethLoginClientBundle\Controller;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\Exception\InvalidRequestTokenException;
 use Contao\CoreBundle\Framework\ContaoFramework;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Client\OAuth2ClientFactory;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Event\OAuth2SuccessEvent;
+use iMi\ContaoShibbolethLoginClientBundle\Client\OAuth2ClientFactory;
+use iMi\ContaoShibbolethLoginClientBundle\Event\OAuth2SuccessEvent;
+use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/ssoauth/frontend', name: 'swiss_alpine_club_sso_login_frontend', defaults: ['_scope' => 'frontend', '_token_check' => false])]
 #[Route('/ssoauth/backend', name: 'swiss_alpine_club_sso_login_backend', defaults: ['_scope' => 'backend', '_token_check' => false])]
-class ContaoOAuth2LoginController extends AbstractController
+class ContaoShibbolethLoginController extends AbstractController
 {
     public function __construct(
         private readonly ContaoFramework $framework,
@@ -49,7 +50,7 @@ class ContaoOAuth2LoginController extends AbstractController
 //        var_dump($_SERVER['REDIRECT_mail']);
 //        var_dump($_SERVER['REDIRECT_cn']);
         if (!$request->server->has('REDIRECT_unscoped-affiliation')) {
-            throw new \Markocupic\SwissAlpineClubContaoLoginClientBundle\Client\Exception\InvalidStateException('Required field missing');
+            throw new \iMi\ContaoShibbolethLoginClientBundle\Client\Exception\InvalidStateException('Required field missing');
         }
 
         return $this->getAccessTokenAction($request, $_scope);
@@ -67,7 +68,8 @@ class ContaoOAuth2LoginController extends AbstractController
             'cn' => $request->server->get('REDIRECT_cn'),
         ];
 
-        $oauth2SuccessEvent = new OAuth2SuccessEvent($userData, $_scope);
+        $user = new AuthUser($userData);
+        $oauth2SuccessEvent = new OAuth2SuccessEvent($user, $_scope);
 
         if (!$this->eventDispatcher->hasListeners($oauth2SuccessEvent::NAME)) {
             return new Response('Successful OAuth2 login but no success handler defined.');

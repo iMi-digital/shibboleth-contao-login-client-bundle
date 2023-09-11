@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Client;
+namespace iMi\ContaoShibbolethLoginClientBundle\Client;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -20,9 +20,9 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Client\Exception\InvalidStateException;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Client\Exception\MissingAuthorizationCodeException;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Client\Provider\ProviderFactory;
+use iMi\ContaoShibbolethLoginClientBundle\Client\Exception\InvalidStateException;
+use iMi\ContaoShibbolethLoginClientBundle\Client\Exception\MissingAuthorizationCodeException;
+use iMi\ContaoShibbolethLoginClientBundle\Client\Provider\ProviderFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;

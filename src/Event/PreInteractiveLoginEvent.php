@@ -12,10 +12,10 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Event;
+namespace iMi\ContaoShibbolethLoginClientBundle\Event;
 
 use Contao\CoreBundle\Security\User\ContaoUserProvider;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\OAuth\OAuthUser;
+use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
 use Symfony\Contracts\EventDispatcher\Event;
 
 final class PreInteractiveLoginEvent extends Event
@@ -26,7 +26,7 @@ final class PreInteractiveLoginEvent extends Event
         private readonly string $userIdentifier,
         private readonly string $userClass,
         private readonly ContaoUserProvider $userProvider,
-        private readonly OAuthUser $resourceOwner,
+        private readonly AuthUser $resourceOwner,
     ) {
     }
 

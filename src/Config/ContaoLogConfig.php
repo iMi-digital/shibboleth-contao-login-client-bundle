@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Config;
+namespace iMi\ContaoShibbolethLoginClientBundle\Config;
 
 final class ContaoLogConfig
 {

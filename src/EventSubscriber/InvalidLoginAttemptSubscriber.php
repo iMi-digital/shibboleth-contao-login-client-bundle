@@ -12,15 +12,15 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\EventSubscriber;
+namespace iMi\ContaoShibbolethLoginClientBundle\EventSubscriber;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\MemberModel;
 use Contao\UserModel;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Config\ContaoLogConfig;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Event\InvalidLoginAttemptEvent;
+use iMi\ContaoShibbolethLoginClientBundle\Config\ContaoLogConfig;
+use iMi\ContaoShibbolethLoginClientBundle\Event\InvalidLoginAttemptEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use function Safe\json_encode;

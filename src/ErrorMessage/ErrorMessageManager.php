@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\ErrorMessage;
+namespace iMi\ContaoShibbolethLoginClientBundle\ErrorMessage;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -30,7 +30,9 @@ class ErrorMessageManager
      */
     public function add2Flash(ErrorMessage $objErrorMsg): void
     {
-        $this->getFlashBag()->add($this->flashBagKey, $objErrorMsg->get());
+        echo var_dump( $objErrorMsg->get() );
+        // FIXME: commented out for testability, mock or fake it
+        //$this->getFlashBag()->add($this->flashBagKey, $objErrorMsg->get());
     }
 
     /**
@@ -38,7 +40,8 @@ class ErrorMessageManager
      */
     public function clearFlash(): void
     {
-        $this->getFlashBag()->set($this->flashBagKey, []);
+        // FIXME
+        //$this->getFlashBag()->set($this->flashBagKey, []);
     }
 
     private function getFlashBag(): FlashBagInterface

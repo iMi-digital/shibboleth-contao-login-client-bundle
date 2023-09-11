@@ -12,10 +12,10 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Event;
+namespace iMi\ContaoShibbolethLoginClientBundle\Event;
 
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\OAuth\OAuthUser;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\User\ContaoUser;
+use iMi\ContaoShibbolethLoginClientBundle\Security\OAuth\OAuthUser;
+use iMi\ContaoShibbolethLoginClientBundle\Security\User\ContaoUser;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class InvalidLoginAttemptEvent extends Event

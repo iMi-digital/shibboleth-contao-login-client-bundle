@@ -12,17 +12,17 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\OAuth;
+namespace iMi\ContaoShibbolethLoginClientBundle\Security\Auth;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\System;
 use Contao\Validator;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\ErrorMessage\ErrorMessage;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\ErrorMessage\ErrorMessageManager;
+use iMi\ContaoShibbolethLoginClientBundle\ErrorMessage\ErrorMessage;
+use iMi\ContaoShibbolethLoginClientBundle\ErrorMessage\ErrorMessageManager;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class OAuthUserChecker
+class AuthUserChecker
 {
     /**
      * NAVISION section id regex.
@@ -39,10 +39,10 @@ class OAuthUserChecker
     /**
      * Check if OAuth user has a valid uuid/sub.
      */
-    public function checkHasUuid(OAuthUser $oAuthUser): bool
+    public function checkHasUuid(AuthUser $authUser): bool
     {
         /** @var System $systemAdapter */
-        if (empty($oAuthUser->getId())) {
+        if (empty($authUser->getId())) {
             $this->errorMessageManager->add2Flash(
                 new ErrorMessage(
                     ErrorMessage::LEVEL_WARNING,
@@ -102,16 +102,16 @@ class OAuthUserChecker
     /**
      * Check if OAuth user has a valid email address.
      */
-    public function checkHasValidEmailAddress(OAuthUser $oAuthUser): bool
+    public function checkHasValidEmailAddress(AuthUser $authUser): bool
     {
         /** @var Validator $validatorAdapter */
         $validatorAdapter = $this->framework->getAdapter(Validator::class);
 
-        if (empty($oAuthUser->getEmail()) || !$validatorAdapter->isEmail($oAuthUser->getEmail())) {
+        if (empty($authUser->getEmail()) || !$validatorAdapter->isEmail($authUser->getEmail())) {
             $this->errorMessageManager->add2Flash(
                 new ErrorMessage(
                     ErrorMessage::LEVEL_WARNING,
-                    $this->translator->trans('ERR.sacOidcLoginError_invalidEmail_matter', [$oAuthUser->getFirstName()], 'contao_default'),
+                    $this->translator->trans('ERR.sacOidcLoginError_invalidEmail_matter', [$authUser->getFirstName()], 'contao_default'),
                     $this->translator->trans('ERR.sacOidcLoginError_invalidEmail_howToFix', [], 'contao_default'),
                     $this->translator->trans('ERR.sacOidcLoginError_invalidEmail_explain', [], 'contao_default'),
                 )
@@ -126,7 +126,7 @@ class OAuthUserChecker
     /**
      * Return all allowed SAC section ids a OAuth user belongs to.
      */
-    public function getAllowedSacSectionIds(OAuthUser $oAuthUser, string $contaoScope): array
+    public function getAllowedSacSectionIds(AuthUser $authUser, string $contaoScope): array
     {
         /** @var System $systemAdapter */
         $systemAdapter = $this->framework->getAdapter(System::class);
@@ -143,7 +143,7 @@ class OAuthUserChecker
             ;
         }
 
-        $arrGroupMembership = $this->getSacSectionIds($oAuthUser);
+        $arrGroupMembership = $this->getSacSectionIds($authUser);
 
         return array_unique(array_intersect($arrAllowedGroups, $arrGroupMembership));
     }
@@ -164,9 +164,9 @@ class OAuthUserChecker
     /**
      * Return all SAC section ids a OAuth user belongs to.
      */
-    private function getSacSectionIds(OAuthUser $oAuthUser): array
+    private function getSacSectionIds(AuthUser $authUser): array
     {
-        $strRoles = $oAuthUser->getRolesAsString();
+        $strRoles = $authUser->getRolesAsString();
 
         if (empty($strRoles)) {
             return [];

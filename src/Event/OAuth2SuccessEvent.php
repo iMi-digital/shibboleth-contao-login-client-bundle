@@ -12,8 +12,9 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Event;
+namespace iMi\ContaoShibbolethLoginClientBundle\Event;
 
+use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class OAuth2SuccessEvent extends Event
@@ -21,12 +22,12 @@ class OAuth2SuccessEvent extends Event
     public const NAME = 'imi_shibboleth_client.auth_success';
 
     public function __construct(
-        private readonly array $userData,
+        private readonly AuthUser $userData,
         private readonly string $contaoScope
     ) {
     }
 
-    public function getUserData(): array
+    public function getAuthUser(): AuthUser
     {
         return $this->userData;
     }

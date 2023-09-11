@@ -12,10 +12,10 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\EventSubscriber;
+namespace iMi\ContaoShibbolethLoginClientBundle\EventSubscriber;
 
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Event\OAuth2SuccessEvent;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\Authentication\Authenticator;
+use iMi\ContaoShibbolethLoginClientBundle\Event\OAuth2SuccessEvent;
+use iMi\ContaoShibbolethLoginClientBundle\Security\Authentication\Authenticator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OAuth2SuccessSubscriber implements EventSubscriberInterface
@@ -37,10 +37,10 @@ class OAuth2SuccessSubscriber implements EventSubscriberInterface
      */
     public function onOAuth2Success(OAuth2SuccessEvent $event): void
     {
-        $userData = $event->getUserData();
+        $authUser = $event->getAuthUser();
         $scope = $event->getContaoScope();
 
         // Get the user from resource owner and login to contao firewall
-        $this->authenticator->authenticateContaoUser($userData, $scope);
+        $this->authenticator->authenticateContaoUser($authUser, $scope);
     }
 }

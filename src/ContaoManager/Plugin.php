@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\ContaoManager;
+namespace iMi\ContaoShibbolethLoginClientBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
@@ -21,7 +21,7 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ConfigPluginInterface;
 use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
 use Markocupic\SacEventToolBundle\MarkocupicSacEventToolBundle;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\MarkocupicSwissAlpineClubContaoLoginClientBundle;
+use iMi\ContaoShibbolethLoginClientBundle\MarkocupicSwissAlpineClubContaoLoginClientBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -45,7 +45,7 @@ class Plugin implements ConfigPluginInterface, BundlePluginInterface, RoutingPlu
      */
     public function registerContainerConfiguration(LoaderInterface $loader, array $config): void
     {
-        $loader->load('@MarkocupicSwissAlpineClubContaoLoginClientBundle/config/config.yaml');
+        $loader->load('@ContaoShibbolethLoginClientBundle/config/config.yaml');
     }
 
     /**

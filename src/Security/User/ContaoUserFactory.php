@@ -12,13 +12,13 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\User;
+namespace iMi\ContaoShibbolethLoginClientBundle\Security\User;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Doctrine\DBAL\Connection;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\ErrorMessage\ErrorMessageManager;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\OAuth\OAuthUser;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\OAuth\OAuthUserChecker;
+use iMi\ContaoShibbolethLoginClientBundle\ErrorMessage\ErrorMessageManager;
+use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
+use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUserChecker;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -29,12 +29,12 @@ final class ContaoUserFactory
         private readonly Connection $connection,
         private readonly TranslatorInterface $translator,
         private readonly PasswordHasherFactoryInterface $hasherFactory,
-        private readonly OAuthUserChecker $resourceOwnerChecker,
+        private readonly AuthUserChecker $resourceOwnerChecker,
         private readonly ErrorMessageManager $errorMessageManager,
     ) {
     }
 
-    public function loadContaoUser(OAuthUser $resourceOwner, string $contaoScope): ContaoUser
+    public function loadContaoUser(AuthUser $resourceOwner, string $contaoScope): ContaoUser
     {
         return new ContaoUser(
             $this->framework,
