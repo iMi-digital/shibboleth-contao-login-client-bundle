@@ -42,4 +42,25 @@ class LoginControllerTest extends ContaoTestCase
 
         $this->controller->__invoke($request, 'frontend');
     }
+
+    public function testAdminPanelInvoke(): void
+    {
+        $this->markTestIncomplete('TODO: Need to pre-create the user first');
+
+        $session = new Session(new MockFileSessionStorage());
+
+        $request = new Request([], [], [], [], [], [
+            'REDIRECT_unscoped-affiliation' => 'admin',
+            'REDIRECT_uid' => 'testadmin',
+            'REDIRECT_sn' => 'User',
+            'REDIRECT_mail' => 'testadmin@example.com',
+            'REDIRECT_cn' => 'Test Tester',
+        ]);
+        $request->setSession($session);
+        $this->getContainer()->get('request_stack')->push($request);
+
+        $this->expectException(RedirectResponseException::class);
+
+        $this->controller->__invoke($request, 'backend');
+    }
 }

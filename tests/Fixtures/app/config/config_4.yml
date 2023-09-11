@@ -115,3 +115,5 @@ sac_oauth2_client:
     oidc:
         auto_create_frontend_user: true
         auto_create_backend_user: true
+        allowed_backend_sac_section_ids:
+            - admin
