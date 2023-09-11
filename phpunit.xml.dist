@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" colors="true" defaultTestSuite="changelanguage" bootstrap="vendor/autoload.php">
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0"/>
+        <env name="SYMFONY_PATCH_TYPE_DECLARATIONS" value="deprecations=0"/>
+        <env name="KERNEL_CLASS" value="iMi\ContaoShibbolethLoginClientBundle\Tests\Fixtures\app\AppKernel"/>
+        <env name="APP_SECRET" value="foobar"/>
+        <env name="DATABASE_URL" value="mysql://user:user@localhost:3306/contaoshibboleth"/>
+    </php>
+    <testsuites>
+        <testsuite name="changelanguage">
+            <directory>./tests</directory>
+            <exclude>./tests/Fixtures</exclude>
+        </testsuite>
+    </testsuites>
+    <extensions>
+        <extension class="iMi\ContaoShibbolethLoginClientBundle\Tests\ClearCachePhpunitExtension"/>
+    </extensions>
+</phpunit>
