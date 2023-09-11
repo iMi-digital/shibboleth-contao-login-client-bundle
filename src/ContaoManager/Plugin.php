@@ -21,7 +21,7 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ConfigPluginInterface;
 use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
 use Markocupic\SacEventToolBundle\MarkocupicSacEventToolBundle;
-use iMi\ContaoShibbolethLoginClientBundle\MarkocupicSwissAlpineClubContaoLoginClientBundle;
+use iMi\ContaoShibbolethLoginClientBundle\ContaoShibbolethLoginClientBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -34,9 +34,8 @@ class Plugin implements ConfigPluginInterface, BundlePluginInterface, RoutingPlu
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create(MarkocupicSwissAlpineClubContaoLoginClientBundle::class)
-                ->setLoadAfter([ContaoCoreBundle::class])
-                ->setLoadAfter([MarkocupicSacEventToolBundle::class]),
+            BundleConfig::create(ContaoShibbolethLoginClientBundle::class)
+                ->setLoadAfter([ContaoCoreBundle::class]),
         ];
     }
 
