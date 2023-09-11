@@ -49,6 +49,10 @@
     "extra": {
         "contao-manager-plugin": "iMi\\ContaoShibbolethLoginClientBundle\\ContaoManager\\Plugin"
     },
+    "scripts": {
+        "check-cs": "@php vendor/bin/ecs",
+        "unit-tests": "@php vendor/bin/phpunit --colors=always"
+    },
     "config": {
         "allow-plugins": {
             "contao-components/installer": true,
