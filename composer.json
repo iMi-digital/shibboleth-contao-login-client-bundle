@@ -10,14 +10,14 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Marko Cupic",
-            "homepage": "https://github.com/markocupic",
-            "role": "Developer of Original Module"
-        },
-        {
             "name": "iMi digital GmbH",
             "homepage": "https://github.com/imi-digital",
             "role": "Developer of Shibboleth Module"
+        },
+        {
+            "name": "Marko Cupic",
+            "homepage": "https://github.com/markocupic",
+            "role": "Developer of Original Module"
         }
     ],
     "support": {
@@ -38,7 +38,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Markocupic\\SwissAlpineClubContaoLoginClientBundle\\": "src/"
+            "iMi\\ContaoLoginClientBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "iMi\\ContaoLoginClientBundle\\Tests\\": "tests/"
         }
     },
     "extra": {
