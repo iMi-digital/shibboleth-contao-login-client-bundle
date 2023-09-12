@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -27,7 +27,7 @@ class ContaoShibbolethLoginClientBundle extends Bundle
 
     public function getContainerExtension(): iMiContaoShibbolethLoginClientExtension
     {
-        // Set alias sac_oauth2_client
+        // Set alias shibboleth_auth_client
         return new iMiContaoShibbolethLoginClientExtension();
     }
 

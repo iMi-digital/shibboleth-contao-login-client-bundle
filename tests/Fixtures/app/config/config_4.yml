@@ -111,9 +111,8 @@ services:
     doctrine.orm.default_entity_manager.validator_loader:
         synthetic: true
 
-sac_oauth2_client:
-    oidc:
+shibboleth_auth_client:
+    shibboleth:
         auto_create_frontend_user: true
-        auto_create_backend_user: true
-        allowed_backend_sac_section_ids:
+        allowed_backend_groups:
             - admin

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -26,16 +26,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/ssoauth/frontend', name: 'swiss_alpine_club_sso_login_frontend', defaults: ['_scope' => 'frontend', '_token_check' => false])]
-#[Route('/ssoauth/backend', name: 'swiss_alpine_club_sso_login_backend', defaults: ['_scope' => 'backend', '_token_check' => false])]
+#[Route('/ssoauth/frontend', name: 'shibboleth_sso_login_frontend', defaults: ['_scope' => 'frontend', '_token_check' => false])]
+#[Route('/ssoauth/backend', name: 'shibboleth_sso_login_backend', defaults: ['_scope' => 'backend', '_token_check' => false])]
 class ContaoShibbolethLoginController extends AbstractController
 {
     public function __construct(
         private readonly ContaoFramework $framework,
-        private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly OAuth2ClientFactory $oAuth2ClientFactory,
-        private readonly string $contaoCsrfTokenName,
-        private readonly bool $enableCsrfTokenCheck,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
     }
 

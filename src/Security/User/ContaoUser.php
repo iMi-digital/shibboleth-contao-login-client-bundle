@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -117,16 +117,16 @@ class ContaoUser
                 $this->errorMessageManager->add2Flash(
                     new ErrorMessage(
                         ErrorMessage::LEVEL_WARNING,
-                        $this->translator->trans('ERR.sacOidcLoginError_userDoesNotExist_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
-                        $this->translator->trans('ERR.sacOidcLoginError_userDoesNotExist_howToFix', [], 'contao_default'),
-                        $this->translator->trans('ERR.sacOidcLoginError_userDoesNotExist_explain', [], 'contao_default'),
+                        $this->translator->trans('ERR.sacshibbolethLoginError_userDoesNotExist_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
+                        $this->translator->trans('ERR.sacshibbolethLoginError_userDoesNotExist_howToFix', [], 'contao_default'),
+                        $this->translator->trans('ERR.sacshibbolethLoginError_userDoesNotExist_explain', [], 'contao_default'),
                     )
                 );
             } else {
                 $this->errorMessageManager->add2Flash(
                     new ErrorMessage(
                         ErrorMessage::LEVEL_WARNING,
-                        $this->translator->trans('ERR.sacOidcLoginError_backendUserNotFound_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
+                        $this->translator->trans('ERR.sacshibbolethLoginError_backendUserNotFound_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
                     )
                 );
             }
@@ -175,9 +175,9 @@ class ContaoUser
         $this->errorMessageManager->add2Flash(
             new ErrorMessage(
                 ErrorMessage::LEVEL_WARNING,
-                $this->translator->trans('ERR.sacOidcLoginError_accountDisabled_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
+                $this->translator->trans('ERR.sacshibbolethLoginError_accountDisabled_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
                 '',
-                $this->translator->trans('ERR.sacOidcLoginError_accountDisabled_explain', [], 'contao_default'),
+                $this->translator->trans('ERR.sacshibbolethLoginError_accountDisabled_explain', [], 'contao_default'),
             )
         );
 
@@ -224,7 +224,7 @@ class ContaoUser
 
             // Add member groups
             $arrGroups = $stringUtilAdapter->deserialize($objMember->groups, true);
-            $arrAutoGroups = $systemAdapter->getContainer()->getParameter('sac_oauth2_client.oidc.add_to_frontend_user_groups');
+            $arrAutoGroups = $systemAdapter->getContainer()->getParameter('shibboleth_auth_client.shibboleth.add_to_frontend_user_groups');
 
             if (!empty($arrAutoGroups) && \is_array($arrAutoGroups)) {
                 foreach ($arrAutoGroups as $groupId) {

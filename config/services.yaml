@@ -2,9 +2,6 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        bind:
-            $contaoCsrfTokenName: '%contao.csrf_token_name%'
-            $enableCsrfTokenCheck: '%sac_oauth2_client.oidc.enable_csrf_token_check%'
 
     iMi\ContaoShibbolethLoginClientBundle\:
         resource: ../src/
@@ -21,44 +18,32 @@ services:
     iMi\ContaoShibbolethLoginClientBundle\Controller\GetLogoutEndpointController:
         public: true
         arguments:
-            - '%sac_oauth2_client.oidc.auth_provider_endpoint_logout%'
-
-    iMi\ContaoShibbolethLoginClientBundle\Client\Provider\ProviderFactory:
-        arguments:
-            - '@router.default'
-            - # provider config
-                'clientId': '%sac_oauth2_client.oidc.client_id%'
-                'clientSecret': '%sac_oauth2_client.oidc.client_secret%'
-                'urlAuthorize': '%sac_oauth2_client.oidc.auth_provider_endpoint_authorize%'
-                'urlAccessToken': '%sac_oauth2_client.oidc.auth_provider_endpoint_token%'
-                'urlResourceOwnerDetails': '%sac_oauth2_client.oidc.auth_provider_endpoint_userinfo%'
-                'redirectRouteBackend': '%sac_oauth2_client.oidc.client_auth_endpoint_backend_route%'
-                'redirectRouteFrontend': '%sac_oauth2_client.oidc.client_auth_endpoint_frontend_route%'
+            - '%shibboleth_auth_client.shibboleth.auth_provider_endpoint_logout%'
 
     iMi\ContaoShibbolethLoginClientBundle\ErrorMessage\ErrorMessageManager:
         arguments:
             - '@request_stack'
-            - '%sac_oauth2_client.session.flash_bag_key%'
+            - '%shibboleth_auth_client.session.flash_bag_key%'
 
     # Register session bags
-    markocupic.sac_oauth2_client.session.factory:
+    markocupic.shibboleth_auth_client.session.factory:
         class: iMi\ContaoShibbolethLoginClientBundle\Session\SessionFactory
         decorates: session.factory
         arguments:
-            - '@markocupic.sac_oauth2_client.session.factory.inner'
-            - '@markocupic.sac_oauth2_client.session.attribute.array_attribute_bag_backend'
-            - '@markocupic.sac_oauth2_client.session.attribute.array_attribute_bag_frontend'
+            - '@markocupic.shibboleth_auth_client.session.factory.inner'
+            - '@markocupic.shibboleth_auth_client.session.attribute.array_attribute_bag_backend'
+            - '@markocupic.shibboleth_auth_client.session.attribute.array_attribute_bag_frontend'
 
-    markocupic.sac_oauth2_client.session.attribute.array_attribute_bag_backend:
+    markocupic.shibboleth_auth_client.session.attribute.array_attribute_bag_backend:
         class: iMi\ContaoShibbolethLoginClientBundle\Session\Attribute\ArrayAttributeBag
         arguments:
-            - '_sac_oauth2_client_attr_backend'
+            - '_shibboleth_auth_client_attr_backend'
         calls:
-            - [ 'setName', [ 'sac_oauth2_client_attr_backend' ] ]
+            - [ 'setName', [ 'shibboleth_auth_client_attr_backend' ] ]
 
-    markocupic.sac_oauth2_client.session.attribute.array_attribute_bag_frontend:
+    markocupic.shibboleth_auth_client.session.attribute.array_attribute_bag_frontend:
         class: iMi\ContaoShibbolethLoginClientBundle\Session\Attribute\ArrayAttributeBag
         arguments:
-            - '_sac_oauth2_client_attr_frontend'
+            - '_shibboleth_auth_client_attr_frontend'
         calls:
-            - [ 'setName', [ 'sac_oauth2_client_attr_frontend' ] ]
+            - [ 'setName', [ 'shibboleth_auth_client_attr_frontend' ] ]

@@ -9,7 +9,7 @@ $GLOBALS['TL_CSS'][] = 'bundles/markocupicswissalpineclubcontaologinclient/css/s
 <?php endif; ?>
 
 <?php if ($this->login): ?>
-<form action="/Shibboleth.sso/Login" id="sacOidcLoginFe_<?= $this->id ?>" class="sac-oidc-login-fe" method="get">
+<form action="/Shibboleth.sso/Login" id="sacshibbolethLoginFe_<?= $this->id ?>" class="sac-shibboleth-login-fe" method="get">
   <div class="formbody">
     <input type="hidden" name="target" value="<?= $this->shibbolethLoginUrl ?>">
     <div class="sac-login-button-group sac-login-button-group-lg">
@@ -22,7 +22,7 @@ $GLOBALS['TL_CSS'][] = 'bundles/markocupicswissalpineclubcontaologinclient/css/s
 </form>
 
 <?php if ($this->error): ?>
-<div class="trigger-ids-kill-session sac-oidc-error error alert d-flex flex-column alert-<?= $this->error['bs-alert-class'] ?> mt-4">
+<div class="trigger-ids-kill-session sac-shibboleth-error error alert d-flex flex-column alert-<?= $this->error['bs-alert-class'] ?> mt-4">
 
   <?php if ('' != $this->error['matter']): ?>
   <div class="error-matter-box mb-3">

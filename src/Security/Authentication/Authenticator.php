@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -69,19 +69,19 @@ class Authenticator
 
         $container = $this->system->getContainer();
 
-        $isDebugMode = $container->getParameter('sac_oauth2_client.oidc.debug_mode');
+        $isDebugMode = $container->getParameter('shibboleth_auth_client.shibboleth.debug_mode');
 
         /** @var bool $blnAutoCreateContaoUser */
-        $blnAutoCreateContaoUser = $container->getParameter('sac_oauth2_client.oidc.auto_create_'.$contaoScope.'_user');
+        $blnAutoCreateContaoUser = $container->getParameter('shibboleth_auth_client.shibboleth.auto_create_'.$contaoScope.'_user');
 
         /** @var bool $blnAllowLoginToSacMembersOnly */
-        $blnAllowLoginToSacMembersOnly = $container->getParameter('sac_oauth2_client.oidc.allow_'.$contaoScope.'_login_to_sac_members_only');
+        $blnAllowLoginToSacMembersOnly = $container->getParameter('shibboleth_auth_client.shibboleth.allow_'.$contaoScope.'_login_to_sac_members_only');
 
         /** @var bool $blnAllowLoginToPredefinedSectionsOnly */
-        $blnAllowLoginToPredefinedSectionsOnly = $container->getParameter('sac_oauth2_client.oidc.allow_'.$contaoScope.'_login_to_predefined_section_members_only');
+        $blnAllowLoginToPredefinedSectionsOnly = $container->getParameter('shibboleth_auth_client.shibboleth.allow_'.$contaoScope.'_login_to_predefined_section_members_only');
 
         /** @var bool $blnAllowContaoLoginIfAccountIsDisabled */
-        $blnAllowContaoLoginIfAccountIsDisabled = $container->getParameter('sac_oauth2_client.oidc.allow_'.$contaoScope.'_login_if_contao_account_is_disabled');
+        $blnAllowContaoLoginIfAccountIsDisabled = $container->getParameter('shibboleth_auth_client.shibboleth.allow_'.$contaoScope.'_login_if_contao_account_is_disabled');
 
         // For testing & debugging purposes only
         //$authUser->overrideData($authUser->getDummyResourceOwnerData(true));

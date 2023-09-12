@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -15,4 +15,4 @@ declare(strict_types=1);
 /*
  * Front end modules
  */
-$GLOBALS['TL_LANG']['FMD']['swiss_alpine_club_oidc_frontend_login'] = ['Swiss Alpine Club OIDC (Single Sign-On) Frontend Login', 'Single Sign On OpenId Connect SAC Login'];
+$GLOBALS['TL_LANG']['FMD']['shibboleth_frontend_login'] = ['Shibboleth (Single Sign-On) Frontend Login', 'Single Sign On'];

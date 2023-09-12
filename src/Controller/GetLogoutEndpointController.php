@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/ssoauth/get_logout_endpoint', name: 'swiss_alpine_club_sso_login_get_logout_endpoint')]
+#[Route('/ssoauth/get_logout_endpoint', name: 'shibboleth_sso_login_get_logout_endpoint')]
 class GetLogoutEndpointController extends AbstractController
 {
     public function __construct(

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -46,8 +46,8 @@ class AuthUserChecker
             $this->errorMessageManager->add2Flash(
                 new ErrorMessage(
                     ErrorMessage::LEVEL_WARNING,
-                    $this->translator->trans('ERR.sacOidcLoginError_invalidUuid_matter', [], 'contao_default'),
-                    $this->translator->trans('ERR.sacOidcLoginError_invalidUuid_howToFix', [], 'contao_default'),
+                    $this->translator->trans('ERR.sacshibbolethLoginError_invalidUuid_matter', [], 'contao_default'),
+                    $this->translator->trans('ERR.sacshibbolethLoginError_invalidUuid_howToFix', [], 'contao_default'),
                 )
             );
 
@@ -66,8 +66,8 @@ class AuthUserChecker
             $this->errorMessageManager->add2Flash(
                 new ErrorMessage(
                     ErrorMessage::LEVEL_WARNING,
-                    $this->translator->trans('ERR.sacOidcLoginError_userIsNotSacMember_matter', [$oAuthUser->getFirstName()], 'contao_default'),
-                    $this->translator->trans('ERR.sacOidcLoginError_userIsNotSacMember_howToFix', [], 'contao_default'),
+                    $this->translator->trans('ERR.sacshibbolethLoginError_userIsNotSacMember_matter', [$oAuthUser->getFirstName()], 'contao_default'),
+                    $this->translator->trans('ERR.sacshibbolethLoginError_userIsNotSacMember_howToFix', [], 'contao_default'),
                 )
             );
 
@@ -91,8 +91,8 @@ class AuthUserChecker
         $this->errorMessageManager->add2Flash(
             new ErrorMessage(
                 ErrorMessage::LEVEL_WARNING,
-                $this->translator->trans('ERR.sacOidcLoginError_userIsNotMemberOfAllowedSection_matter', [$oAuthUser->getFirstName()], 'contao_default'),
-                $this->translator->trans('ERR.sacOidcLoginError_userIsNotMemberOfAllowedSection_howToFix', [], 'contao_default'),
+                $this->translator->trans('ERR.sacshibbolethLoginError_userIsNotMemberOfAllowedSection_matter', [$oAuthUser->getFirstName()], 'contao_default'),
+                $this->translator->trans('ERR.sacshibbolethLoginError_userIsNotMemberOfAllowedSection_howToFix', [], 'contao_default'),
             )
         );
 
@@ -111,9 +111,9 @@ class AuthUserChecker
             $this->errorMessageManager->add2Flash(
                 new ErrorMessage(
                     ErrorMessage::LEVEL_WARNING,
-                    $this->translator->trans('ERR.sacOidcLoginError_invalidEmail_matter', [$authUser->getFirstName()], 'contao_default'),
-                    $this->translator->trans('ERR.sacOidcLoginError_invalidEmail_howToFix', [], 'contao_default'),
-                    $this->translator->trans('ERR.sacOidcLoginError_invalidEmail_explain', [], 'contao_default'),
+                    $this->translator->trans('ERR.sacshibbolethLoginError_invalidEmail_matter', [$authUser->getFirstName()], 'contao_default'),
+                    $this->translator->trans('ERR.sacshibbolethLoginError_invalidEmail_howToFix', [], 'contao_default'),
+                    $this->translator->trans('ERR.sacshibbolethLoginError_invalidEmail_explain', [], 'contao_default'),
                 )
             );
 
@@ -134,12 +134,12 @@ class AuthUserChecker
         if (ContaoCoreBundle::SCOPE_FRONTEND === $contaoScope) {
             $arrAllowedGroups = $systemAdapter
                 ->getContainer()
-                ->getParameter('sac_oauth2_client.oidc.allowed_frontend_sac_section_ids')
+                ->getParameter('shibboleth_auth_client.shibboleth.allowed_frontend_groups')
             ;
         } else {
             $arrAllowedGroups = $systemAdapter
                 ->getContainer()
-                ->getParameter('sac_oauth2_client.oidc.allowed_backend_sac_section_ids')
+                ->getParameter('shibboleth_auth_client.shibboleth.allowed_backend_groups')
             ;
         }
 

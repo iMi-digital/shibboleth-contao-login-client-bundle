@@ -1,8 +1,8 @@
-<div id="mod_swiss_alpine_club_oidc_backend_login">
+<div id="mod_shibboleth_backend_login">
   <h1><?= $this->trans('MSC.loginBT', [], 'contao_default') ?></h1>
-  <form action="/<?= $this->route('swiss_alpine_club_sso_login_backend') ?>" id="sacOidcLoginBe" class="sac-oidc-login-be" method="post">
+  <form action="/<?= $this->route('shibboleth_sso_login_backend') ?>" id="sacshibbolethLoginBe" class="sac-shibboleth-login-be" method="post">
     <div class="formbody">
-      <input type="hidden" name="FORM_SUBMIT" value="sac-oidc-login-be">
+      <input type="hidden" name="FORM_SUBMIT" value="sac-shibboleth-login-be">
       <?php if ($this->enableCsrfTokenCheck): ?>
       <input type="hidden" name="REQUEST_TOKEN" value="<?= $this->rt ?>">
       <?php endif; ?>
@@ -22,7 +22,7 @@
   </form>
 
   <?php if ($this->error): ?>
-  <div class="trigger-ids-kill-session sac-oidc-error <?= $this->error['level'] ?> backend">
+  <div class="trigger-ids-kill-session sac-shibboleth-error <?= $this->error['level'] ?> backend">
 
     <?php if ('' != $this->error['matter']): ?>
     <div class="error-matter-box error-box">
