@@ -14,11 +14,11 @@ declare(strict_types=1);
 
 namespace iMi\ContaoShibbolethLoginClientBundle\EventSubscriber;
 
-use iMi\ContaoShibbolethLoginClientBundle\Event\OAuth2SuccessEvent;
+use iMi\ContaoShibbolethLoginClientBundle\Event\ShibbolethSuccessEvent;
 use iMi\ContaoShibbolethLoginClientBundle\Security\Authentication\Authenticator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class OAuth2SuccessSubscriber implements EventSubscriberInterface
+class ShibbolethSuccessSubscriber implements EventSubscriberInterface
 {
     private const PRIORITY = 1000;
 
@@ -29,13 +29,13 @@ class OAuth2SuccessSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return [OAuth2SuccessEvent::NAME => ['onOAuth2Success', self::PRIORITY]];
+        return [ShibbolethSuccessEvent::NAME => ['onShibbolethSuccess', self::PRIORITY]];
     }
 
     /**
      * @throws \Exception
      */
-    public function onOAuth2Success(OAuth2SuccessEvent $event): void
+    public function onShibbolethSuccess(ShibbolethSuccessEvent $event): void
     {
         $authUser = $event->getAuthUser();
         $scope = $event->getContaoScope();

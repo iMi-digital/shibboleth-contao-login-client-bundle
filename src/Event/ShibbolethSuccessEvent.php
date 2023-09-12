@@ -17,7 +17,7 @@ namespace iMi\ContaoShibbolethLoginClientBundle\Event;
 use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class OAuth2SuccessEvent extends Event
+class ShibbolethSuccessEvent extends Event
 {
     public const NAME = 'imi_shibboleth_client.auth_success';
 

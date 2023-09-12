@@ -17,6 +17,6 @@ namespace iMi\ContaoShibbolethLoginClientBundle\Client\Exception;
 /**
  * Thrown if not all required options have been set.
  */
-class InvalidOAuth2ProviderConfigurationException extends \RuntimeException
+class InvalidShibbolethProviderConfigurationException extends \RuntimeException
 {
 }

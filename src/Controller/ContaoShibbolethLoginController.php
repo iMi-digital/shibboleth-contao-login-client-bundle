@@ -17,8 +17,8 @@ namespace iMi\ContaoShibbolethLoginClientBundle\Controller;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\Exception\InvalidRequestTokenException;
 use Contao\CoreBundle\Framework\ContaoFramework;
-use iMi\ContaoShibbolethLoginClientBundle\Client\OAuth2ClientFactory;
-use iMi\ContaoShibbolethLoginClientBundle\Event\OAuth2SuccessEvent;
+use iMi\ContaoShibbolethLoginClientBundle\Client\ShibbolethClientFactory;
+use iMi\ContaoShibbolethLoginClientBundle\Event\ShibbolethSuccessEvent;
 use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -66,15 +66,15 @@ class ContaoShibbolethLoginController extends AbstractController
         ];
 
         $user = new AuthUser($userData);
-        $oauth2SuccessEvent = new OAuth2SuccessEvent($user, $_scope);
+        $oauth2SuccessEvent = new ShibbolethSuccessEvent($user, $_scope);
 
         if (!$this->eventDispatcher->hasListeners($oauth2SuccessEvent::NAME)) {
-            return new Response('Successful OAuth2 login but no success handler defined.');
+            return new Response('Successful Shibboleth login but no success handler defined.');
         }
 
-        // Dispatch the OAuth2 success event.
+        // Dispatch the Shibboleth success event.
         // Use an event subscriber to ...
-        // - identify the Contao user from OAuth2 user
+        // - identify the Contao user from Shibboleth user
         // - check if user is in an allowed section, etc.
         // - and login to the Contao firewall or redirect to login-failure page
         $this->eventDispatcher->dispatch($oauth2SuccessEvent, $oauth2SuccessEvent::NAME);
