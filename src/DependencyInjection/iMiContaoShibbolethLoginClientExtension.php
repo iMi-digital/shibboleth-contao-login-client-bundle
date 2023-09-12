@@ -52,6 +52,7 @@ class iMiContaoShibbolethLoginClientExtension extends Extension
         $container->setParameter($rootKey.'.shibboleth.debug_mode', $config['shibboleth']['debug_mode']);
         $container->setParameter($rootKey.'.shibboleth.add_to_frontend_user_groups', $config['shibboleth']['add_to_frontend_user_groups']);
         $container->setParameter($rootKey.'.shibboleth.auto_create_frontend_user', $config['shibboleth']['auto_create_frontend_user']);
+        $container->setParameter($rootKey.'.shibboleth.auto_create_backend_user', $config['shibboleth']['auto_create_backend_user']);
         $container->setParameter($rootKey.'.shibboleth.allow_backend_login_if_contao_account_is_disabled', $config['shibboleth']['allow_backend_login_if_contao_account_is_disabled']);
         $container->setParameter($rootKey.'.shibboleth.allow_frontend_login_if_contao_account_is_disabled', $config['shibboleth']['allow_frontend_login_if_contao_account_is_disabled']);
         $container->setParameter($rootKey.'.shibboleth.allowed_frontend_groups', $config['shibboleth']['allowed_frontend_groups']);

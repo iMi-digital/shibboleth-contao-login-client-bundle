@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace iMi\ContaoShibbolethLoginClientBundle\Event;
 
-use iMi\ContaoShibbolethLoginClientBundle\Security\OAuth\OAuthUser;
+use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
 use iMi\ContaoShibbolethLoginClientBundle\Security\User\ContaoUser;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -33,7 +33,7 @@ class InvalidLoginAttemptEvent extends Event
     public function __construct(
         private readonly string $causeOfError,
         private readonly string $contaoScope,
-        private readonly OAuthUser $resourceOwner,
+        private readonly AuthUser $resourceOwner,
         private readonly ContaoUser|null $contaoUser = null,
     ) {
     }
@@ -48,7 +48,7 @@ class InvalidLoginAttemptEvent extends Event
         return $this->contaoScope;
     }
 
-    public function getResourceOwner(): OAuthUser
+    public function getResourceOwner(): AuthUser
     {
         return $this->resourceOwner;
     }

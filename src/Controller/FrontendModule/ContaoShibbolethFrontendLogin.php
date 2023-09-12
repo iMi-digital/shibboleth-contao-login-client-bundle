@@ -77,9 +77,6 @@ class ContaoShibbolethFrontendLogin extends AbstractFrontendModuleController
                 $strRedirect = $redirectPage instanceof PageModel ? $redirectPage->getAbsoluteUrl() : $strRedirect;
             }
 
-            // Csrf token check is disabled by default
-            $template->enableCsrfTokenCheck = $systemAdapter->getContainer()->getParameter('shibboleth_auth_client.shibboleth.enable_csrf_token_check');
-
             // Since Contao 4.9 urls are base64 encoded
             $template->targetPath = $strRedirect;
 

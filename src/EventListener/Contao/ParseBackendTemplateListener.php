@@ -58,13 +58,6 @@ class ParseBackendTemplateListener
             $template->rt = '';
             $template->enableCsrfTokenCheck = false;
 
-            if ($systemAdapter->getContainer()->getParameter('shibboleth_auth_client.shibboleth.enable_csrf_token_check')) {
-                if (preg_match('/name="REQUEST_TOKEN"\s+value=\"([^\']*?)\"/', $strContent, $matches)) {
-                    $template->rt = $matches[1];
-                    $template->enableCsrfTokenCheck = true;
-                }
-            }
-
             $template->targetPath = '';
 
             if (preg_match('/name="_target_path"\s+value=\"([^\']*?)\"/', $strContent, $matches)) {

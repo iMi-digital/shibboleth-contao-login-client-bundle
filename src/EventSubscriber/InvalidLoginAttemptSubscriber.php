@@ -53,7 +53,7 @@ class InvalidLoginAttemptSubscriber implements EventSubscriberInterface
         $logArgs = [
             $resourceOwner->getFirstName(),
             $resourceOwner->getLastName(),
-            $resourceOwner->getSacMemberId(),
+            $resourceOwner->getId(),
             $loginEvent->getCauseOfError(),
             json_encode($resourceOwner->toArray()),
         ];
@@ -63,15 +63,15 @@ class InvalidLoginAttemptSubscriber implements EventSubscriberInterface
             $userModel = $memberModelAdapter->findByUsername($resourceOwner->getSacMemberId());
             $logLevel = ContaoLogConfig::SAC_OAUTH2_FRONTEND_LOGIN_FAIL;
             $logText = sprintf(
-                'SAC oauth2 (SSO-Frontend-Login) failed for user "%s %s" with member id [%s]. Cause: %s. JSON Payload: %s',
+                'Shibboleth (SSO-Frontend-Login) failed for user "%s %s" with member id [%s]. Cause: %s. JSON Payload: %s',
                 ...$logArgs,
             );
         } else {
             $userModelAdapter = $this->framework->getAdapter(UserModel::class);
-            $userModel = $userModelAdapter->findBySacMemberId($resourceOwner->getSacMemberId());
+            $userModel = $userModelAdapter->findByUsername($resourceOwner->getId());
             $logLevel = ContaoLogConfig::SAC_OAUTH2_BACKEND_LOGIN_FAIL;
             $logText = sprintf(
-                'SAC oauth2 (SSO-Backend-Login) failed for user "%s %s" with member id [%s]. Cause: %s. JSON Payload: %s',
+                'Shibboleth (SSO-Backend-Login) failed for user "%s %s" with member id [%s]. Cause: %s. JSON Payload: %s',
                 ...$logArgs,
             );
         }

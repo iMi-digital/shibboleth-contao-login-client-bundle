@@ -30,9 +30,7 @@ class ErrorMessageManager
      */
     public function add2Flash(ErrorMessage $objErrorMsg): void
     {
-        echo var_dump( $objErrorMsg->get() );
-        // FIXME: commented out for testability, mock or fake it
-        //$this->getFlashBag()->add($this->flashBagKey, $objErrorMsg->get());
+        $this->getFlashBag()->add($this->flashBagKey, $objErrorMsg->get());
     }
 
     /**
@@ -40,8 +38,7 @@ class ErrorMessageManager
      */
     public function clearFlash(): void
     {
-        // FIXME
-        //$this->getFlashBag()->set($this->flashBagKey, []);
+        $this->getFlashBag()->set($this->flashBagKey, []);
     }
 
     private function getFlashBag(): FlashBagInterface

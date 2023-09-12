@@ -80,6 +80,8 @@ class Authenticator
         // For testing & debugging purposes only
         //$authUser->overrideData($authUser->getDummyResourceOwnerData(true));
 
+        $failurePath = $redirectAfterSuccess . '?failure=1';
+
         if ($isDebugMode) {
             // Log OAuth user details
             $logText = sprintf(
@@ -98,7 +100,7 @@ class Authenticator
         if (!$this->authUserChecker->checkHasUuid($authUser)) {
             $this->dispatchInvalidLoginAttemptEvent(InvalidLoginAttemptEvent::FAILED_CHECK_HAS_UUID, $contaoScope, $authUser);
 
-            throw new RedirectResponseException($oAuth2Client->getFailurePath());
+            throw new RedirectResponseException($failurePath);
         }
 
 //        // Check if user is a SAC member
@@ -126,7 +128,7 @@ class Authenticator
         if (!$this->authUserChecker->checkHasValidEmailAddress($authUser)) {
             $this->dispatchInvalidLoginAttemptEvent(InvalidLoginAttemptEvent::FAILED_CHECK_HAS_VALID_EMAIL_ADDRESS, $contaoScope, $authUser);
 
-            throw new RedirectResponseException($oAuth2Client->getFailurePath());
+            throw new RedirectResponseException($failurePath);
         }
 
         // Create the user wrapper object
@@ -144,7 +146,7 @@ class Authenticator
         if (!$contaoUser->checkUserExists()) {
             $this->dispatchInvalidLoginAttemptEvent(InvalidLoginAttemptEvent::FAILED_CHECK_USER_EXISTS, $contaoScope, $authUser, $contaoUser);
 
-            throw new RedirectResponseException($oAuth2Client->getFailurePath());
+            throw new RedirectResponseException($failurePath);
         }
 
         // Allow login to frontend users only if account is disabled
@@ -203,7 +205,7 @@ class Authenticator
         );
     }
 
-    private function dispatchInvalidLoginAttemptEvent(string $causeOfError, string $contaoScope, OAuthUser $authUser, ContaoUser $contaoUser = null): void
+    private function dispatchInvalidLoginAttemptEvent(string $causeOfError, string $contaoScope, AuthUser $authUser, ContaoUser $contaoUser = null): void
     {
         $event = new InvalidLoginAttemptEvent($causeOfError, $contaoScope, $authUser, $contaoUser);
         $this->eventDispatcher->dispatch($event, InvalidLoginAttemptEvent::NAME);

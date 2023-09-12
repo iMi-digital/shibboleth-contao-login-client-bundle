@@ -50,11 +50,10 @@ class LoginControllerTest extends ContaoTestCase
 
     public function testAdminPanelInvoke(): void
     {
-        $this->markTestIncomplete('TODO: Need to pre-create the user first');
 
         $session = new Session(new MockFileSessionStorage());
 
-        $request = new Request([], [], [], [], [], [
+        $request = new Request(['redirectAfterSuccess' => 'https://www.example.com/contao'], [], [], [], [], [
             'REDIRECT_unscoped-affiliation' => 'admin',
             'REDIRECT_uid' => 'testadmin',
             'REDIRECT_sn' => 'User',
@@ -64,8 +63,13 @@ class LoginControllerTest extends ContaoTestCase
         $request->setSession($session);
         $this->getContainer()->get('request_stack')->push($request);
 
-        $this->expectException(RedirectResponseException::class);
-
-        $this->controller->__invoke($request, 'backend');
+        try {
+            $this->controller->__invoke($request, 'backend');
+        } catch (RedirectResponseException $exception) {
+            $this->assertTrue($exception->getResponse()->isRedirect());
+            $this->assertEquals('https://www.example.com/contao?failure=1', $exception->getResponse()->headers->get('Location'));
+            return;
+        }
+        $this->fail('Redirect exception expected');
     }
 }
