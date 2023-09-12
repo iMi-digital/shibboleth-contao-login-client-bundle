@@ -81,13 +81,12 @@ class ContaoShibbolethFrontendLogin extends AbstractFrontendModuleController
             $template->enableCsrfTokenCheck = $systemAdapter->getContainer()->getParameter('shibboleth_auth_client.shibboleth.enable_csrf_token_check');
 
             // Since Contao 4.9 urls are base64 encoded
-            $template->targetPath = '/Shibboleth.sso/Login'; //'$stringUtilAdapter->specialchars(base64_encode($strRedirect));
-
+            $template->targetPath = $strRedirect;
 
             $redirectRoute = 'shibboleth_sso_login_frontend';
             $template->shibbolethLoginUrl = $this->router->generate(
                 $redirectRoute,
-                [],
+                ['redirectAfterSuccess' => $strRedirect],
                 UrlGeneratorInterface::ABSOLUTE_URL,
             );
 

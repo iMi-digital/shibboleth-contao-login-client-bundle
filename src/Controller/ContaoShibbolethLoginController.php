@@ -65,10 +65,11 @@ class ContaoShibbolethLoginController extends AbstractController
             'cn' => $request->server->get('REDIRECT_cn'),
         ];
 
+        $redirectAfterSuccess = $request->get('redirectAfterSuccess', null);
         $user = new AuthUser($userData);
-        $oauth2SuccessEvent = new ShibbolethSuccessEvent($user, $_scope);
+        $shibbolethSuccessEvent = new ShibbolethSuccessEvent($user, $redirectAfterSuccess, $_scope);
 
-        if (!$this->eventDispatcher->hasListeners($oauth2SuccessEvent::NAME)) {
+        if (!$this->eventDispatcher->hasListeners($shibbolethSuccessEvent::NAME)) {
             return new Response('Successful Shibboleth login but no success handler defined.');
         }
 
@@ -77,7 +78,7 @@ class ContaoShibbolethLoginController extends AbstractController
         // - identify the Contao user from Shibboleth user
         // - check if user is in an allowed section, etc.
         // - and login to the Contao firewall or redirect to login-failure page
-        $this->eventDispatcher->dispatch($oauth2SuccessEvent, $oauth2SuccessEvent::NAME);
+        $this->eventDispatcher->dispatch($shibbolethSuccessEvent, $shibbolethSuccessEvent::NAME);
 
         // This point should normally not be reached at all,
         // since a successful login will take you to the Contao frontend or backend.

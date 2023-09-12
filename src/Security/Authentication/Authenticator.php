@@ -56,7 +56,7 @@ class Authenticator
      * @throws IdentityProviderException
      * @throws JsonException
      */
-    public function authenticateContaoUser(AuthUser $authUser, $contaoScope): void
+    public function authenticateContaoUser(AuthUser $authUser, ?string $redirectAfterSuccess, string $contaoScope): void
     {
         $allowedScopes = [
             ContaoCoreBundle::SCOPE_BACKEND,
@@ -184,8 +184,6 @@ class Authenticator
         // Log in as a Contao backend or frontend user.
         $this->interactiveLogin->login($contaoUser);
 
-        $targetPath = '/Shibboleth.sso/Login';
-
         // Clear the session
         // <NOP> not done for Shibboleth, could be controlled in Apache
 
@@ -200,7 +198,7 @@ class Authenticator
 
         // All ok. The Contao user has successfully logged in.
         // Let's redirect to the target page now.
-        throw new RedirectResponseException($targetPath);
+        throw new RedirectResponseException($redirectAfterSuccess);
     }
 
     private function log(string $logText, string $method, string $context): void

@@ -23,6 +23,7 @@ class ShibbolethSuccessEvent extends Event
 
     public function __construct(
         private readonly AuthUser $userData,
+        private readonly ?string $redirectAfterSuccess,
         private readonly string $contaoScope
     ) {
     }
@@ -35,5 +36,10 @@ class ShibbolethSuccessEvent extends Event
     public function getContaoScope(): string
     {
         return $this->contaoScope;
+    }
+
+    public function getRedirectAfterSuccess(): ?string
+    {
+        return $this->redirectAfterSuccess;
     }
 }

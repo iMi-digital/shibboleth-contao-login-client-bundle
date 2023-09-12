@@ -28,7 +28,7 @@ class LoginControllerTest extends ContaoTestCase
     {
         $session = new Session(new MockFileSessionStorage());
 
-        $request = new Request([], [], [], [], [], [
+        $request = new Request(['redirectAfterSuccess' => 'https://www.example.com/success'], [], [], [], [], [
             'REDIRECT_unscoped-affiliation' => 'staff',
             'REDIRECT_uid' => 'testuser',
             'REDIRECT_sn' => 'User',
@@ -38,9 +38,14 @@ class LoginControllerTest extends ContaoTestCase
         $request->setSession($session);
         $this->getContainer()->get('request_stack')->push($request);
 
-        $this->expectException(RedirectResponseException::class);
-
-        $this->controller->__invoke($request, 'frontend');
+        try {
+            $this->controller->__invoke($request, 'frontend');
+        } catch (RedirectResponseException $exception) {
+            $this->assertTrue($exception->getResponse()->isRedirect());
+            $this->assertEquals('https://www.example.com/success', $exception->getResponse()->headers->get('Location'));
+            return;
+        }
+        $this->fail('Redirect exception expected');
     }
 
     public function testAdminPanelInvoke(): void

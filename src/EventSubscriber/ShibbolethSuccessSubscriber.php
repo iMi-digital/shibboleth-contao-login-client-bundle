@@ -39,8 +39,9 @@ class ShibbolethSuccessSubscriber implements EventSubscriberInterface
     {
         $authUser = $event->getAuthUser();
         $scope = $event->getContaoScope();
+        $redirectAfterSuccess = $event->getRedirectAfterSuccess();
 
         // Get the user from resource owner and login to contao firewall
-        $this->authenticator->authenticateContaoUser($authUser, $scope);
+        $this->authenticator->authenticateContaoUser($authUser, $redirectAfterSuccess, $scope);
     }
 }
