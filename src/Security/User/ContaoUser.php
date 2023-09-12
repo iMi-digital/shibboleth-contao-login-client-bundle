@@ -264,26 +264,16 @@ class ContaoUser
         if (null !== $objUser) {
             // Correctly format the section ids (the key is important!): e.g. [0 => '4250', 2 => '4252'] -> user is member of two SAC Sektionen/Ortsgruppen
             $arrSectionIdsUserIsAllowed = array_map('strval', $this->resourceOwnerChecker->getAllowedSacSectionIds($this->resourceOwner, ContaoCoreBundle::SCOPE_BACKEND));
-            $arrSectionIdsAll = array_map('strval', array_keys($this->util->listSacSections()));
+//            $arrSectionIdsAll = array_map('strval', array_keys($this->util->listSacSections()));
+            $arrSectionIdsAll = [];
             $arrSectionIds = array_filter($arrSectionIdsAll, static fn ($v, $k) => \in_array($v, $arrSectionIdsUserIsAllowed, true), ARRAY_FILTER_USE_BOTH);
 
             $set = [
                 // Be sure to set the correct data type!
                 // Otherwise, the record will be updated
                 // due to wrong type cast only.
-                'mobile' => $this->beautifyPhoneNumber($this->resourceOwner->getPhoneMobile()),
-                'phone' => $this->beautifyPhoneNumber($this->resourceOwner->getPhonePrivate()),
-                'uuid' => $this->resourceOwner->getId(),
-                'lastname' => $this->resourceOwner->getLastName(),
-                'firstname' => $this->resourceOwner->getFirstName(),
                 'name' => $this->resourceOwner->getFullName(),
-                'street' => $this->resourceOwner->getStreet(),
-                'city' => $this->resourceOwner->getCity(),
-                'postal' => $this->resourceOwner->getPostal(),
-                'dateOfBirth' => false !== strtotime($this->resourceOwner->getDateOfBirth()) ? (string) strtotime($this->resourceOwner->getDateOfBirth()) : '0',
-                'gender' => 'HERR' === $this->resourceOwner->getSalutation() ? 'male' : 'female',
                 'email' => $this->resourceOwner->getEmail(),
-                'sectionId' => serialize($arrSectionIds),
             ];
 
             // Set random password
