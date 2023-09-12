@@ -46,8 +46,8 @@ class AuthUserChecker
             $this->errorMessageManager->add2Flash(
                 new ErrorMessage(
                     ErrorMessage::LEVEL_WARNING,
-                    $this->translator->trans('ERR.sacshibbolethLoginError_invalidUuid_matter', [], 'contao_default'),
-                    $this->translator->trans('ERR.sacshibbolethLoginError_invalidUuid_howToFix', [], 'contao_default'),
+                    $this->translator->trans('ERR.shibbolethLoginError_invalidUuid_matter', [], 'contao_default'),
+                    $this->translator->trans('ERR.shibbolethLoginError_invalidUuid_howToFix', [], 'contao_default'),
                 )
             );
 
@@ -66,8 +66,8 @@ class AuthUserChecker
             $this->errorMessageManager->add2Flash(
                 new ErrorMessage(
                     ErrorMessage::LEVEL_WARNING,
-                    $this->translator->trans('ERR.sacshibbolethLoginError_userIsNotSacMember_matter', [$oAuthUser->getFirstName()], 'contao_default'),
-                    $this->translator->trans('ERR.sacshibbolethLoginError_userIsNotSacMember_howToFix', [], 'contao_default'),
+                    $this->translator->trans('ERR.shibbolethLoginError_userIsNotSacMember_matter', [$oAuthUser->getFirstName()], 'contao_default'),
+                    $this->translator->trans('ERR.shibbolethLoginError_userIsNotSacMember_howToFix', [], 'contao_default'),
                 )
             );
 
@@ -91,8 +91,8 @@ class AuthUserChecker
         $this->errorMessageManager->add2Flash(
             new ErrorMessage(
                 ErrorMessage::LEVEL_WARNING,
-                $this->translator->trans('ERR.sacshibbolethLoginError_userIsNotMemberOfAllowedSection_matter', [$oAuthUser->getFirstName()], 'contao_default'),
-                $this->translator->trans('ERR.sacshibbolethLoginError_userIsNotMemberOfAllowedSection_howToFix', [], 'contao_default'),
+                $this->translator->trans('ERR.shibbolethLoginError_userIsNotMemberOfAllowedSection_matter', [$oAuthUser->getFirstName()], 'contao_default'),
+                $this->translator->trans('ERR.shibbolethLoginError_userIsNotMemberOfAllowedSection_howToFix', [], 'contao_default'),
             )
         );
 
@@ -111,9 +111,9 @@ class AuthUserChecker
             $this->errorMessageManager->add2Flash(
                 new ErrorMessage(
                     ErrorMessage::LEVEL_WARNING,
-                    $this->translator->trans('ERR.sacshibbolethLoginError_invalidEmail_matter', [$authUser->getFirstName()], 'contao_default'),
-                    $this->translator->trans('ERR.sacshibbolethLoginError_invalidEmail_howToFix', [], 'contao_default'),
-                    $this->translator->trans('ERR.sacshibbolethLoginError_invalidEmail_explain', [], 'contao_default'),
+                    $this->translator->trans('ERR.shibbolethLoginError_invalidEmail_matter', [$authUser->getFirstName()], 'contao_default'),
+                    $this->translator->trans('ERR.shibbolethLoginError_invalidEmail_howToFix', [], 'contao_default'),
+                    $this->translator->trans('ERR.shibbolethLoginError_invalidEmail_explain', [], 'contao_default'),
                 )
             );
 

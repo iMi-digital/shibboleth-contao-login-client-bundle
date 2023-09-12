@@ -117,16 +117,16 @@ class ContaoUser
                 $this->errorMessageManager->add2Flash(
                     new ErrorMessage(
                         ErrorMessage::LEVEL_WARNING,
-                        $this->translator->trans('ERR.sacshibbolethLoginError_userDoesNotExist_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
-                        $this->translator->trans('ERR.sacshibbolethLoginError_userDoesNotExist_howToFix', [], 'contao_default'),
-                        $this->translator->trans('ERR.sacshibbolethLoginError_userDoesNotExist_explain', [], 'contao_default'),
+                        $this->translator->trans('ERR.shibbolethLoginError_userDoesNotExist_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
+                        $this->translator->trans('ERR.shibbolethLoginError_userDoesNotExist_howToFix', [], 'contao_default'),
+                        $this->translator->trans('ERR.shibbolethLoginError_userDoesNotExist_explain', [], 'contao_default'),
                     )
                 );
             } else {
                 $this->errorMessageManager->add2Flash(
                     new ErrorMessage(
                         ErrorMessage::LEVEL_WARNING,
-                        $this->translator->trans('ERR.sacshibbolethLoginError_backendUserNotFound_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
+                        $this->translator->trans('ERR.shibbolethLoginError_backendUserNotFound_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
                     )
                 );
             }
@@ -175,9 +175,9 @@ class ContaoUser
         $this->errorMessageManager->add2Flash(
             new ErrorMessage(
                 ErrorMessage::LEVEL_WARNING,
-                $this->translator->trans('ERR.sacshibbolethLoginError_accountDisabled_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
+                $this->translator->trans('ERR.shibbolethLoginError_accountDisabled_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
                 '',
-                $this->translator->trans('ERR.sacshibbolethLoginError_accountDisabled_explain', [], 'contao_default'),
+                $this->translator->trans('ERR.shibbolethLoginError_accountDisabled_explain', [], 'contao_default'),
             )
         );
 

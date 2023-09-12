@@ -9,7 +9,7 @@ $GLOBALS['TL_CSS'][] = 'bundles/markocupicswissalpineclubcontaologinclient/css/s
 <?php endif; ?>
 
 <?php if ($this->login): ?>
-<form action="/Shibboleth.sso/Login" id="sacshibbolethLoginFe_<?= $this->id ?>" class="sac-shibboleth-login-fe" method="get">
+<form action="/Shibboleth.sso/Login" id="shibbolethLoginFe_<?= $this->id ?>" class="sac-shibboleth-login-fe" method="get">
   <div class="formbody">
     <input type="hidden" name="target" value="<?= $this->shibbolethLoginUrl ?>">
     <div class="sac-login-button-group sac-login-button-group-lg">
