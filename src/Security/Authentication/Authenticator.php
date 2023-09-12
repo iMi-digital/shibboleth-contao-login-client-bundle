@@ -74,12 +74,6 @@ class Authenticator
         /** @var bool $blnAutoCreateContaoUser */
         $blnAutoCreateContaoUser = $container->getParameter('shibboleth_auth_client.shibboleth.auto_create_'.$contaoScope.'_user');
 
-        /** @var bool $blnAllowLoginToSacMembersOnly */
-        $blnAllowLoginToSacMembersOnly = $container->getParameter('shibboleth_auth_client.shibboleth.allow_'.$contaoScope.'_login_to_sac_members_only');
-
-        /** @var bool $blnAllowLoginToPredefinedSectionsOnly */
-        $blnAllowLoginToPredefinedSectionsOnly = $container->getParameter('shibboleth_auth_client.shibboleth.allow_'.$contaoScope.'_login_to_predefined_section_members_only');
-
         /** @var bool $blnAllowContaoLoginIfAccountIsDisabled */
         $blnAllowContaoLoginIfAccountIsDisabled = $container->getParameter('shibboleth_auth_client.shibboleth.allow_'.$contaoScope.'_login_if_contao_account_is_disabled');
 

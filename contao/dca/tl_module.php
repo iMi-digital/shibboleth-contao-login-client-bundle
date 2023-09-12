@@ -28,8 +28,8 @@ Controller::loadDataContainer('tl_content');
 
 // Palettes
 //PaletteManipulator::create()
-//    ->addLegend('sac_sso_login_settings', 'title_legend_legend')
-//    ->addField(['shibboleth_add_module'], 'sac_sso_login_settings', PaletteManipulator::POSITION_APPEND)
+//    ->addLegend('shibboleth_sso_login_settings', 'title_legend_legend')
+//    ->addField(['shibboleth_add_module'], 'shibboleth_sso_login_settings', PaletteManipulator::POSITION_APPEND)
 //    ->applyToPalette('login', 'tl_module');
 
 // Fields

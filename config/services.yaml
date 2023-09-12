@@ -15,11 +15,6 @@ services:
             ../src/Security/User/ContaoUser.php,
         ]
 
-    iMi\ContaoShibbolethLoginClientBundle\Controller\GetLogoutEndpointController:
-        public: true
-        arguments:
-            - '%shibboleth_auth_client.shibboleth.auth_provider_endpoint_logout%'
-
     iMi\ContaoShibbolethLoginClientBundle\ErrorMessage\ErrorMessageManager:
         arguments:
             - '@request_stack'
