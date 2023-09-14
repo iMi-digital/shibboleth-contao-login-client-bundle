@@ -43,9 +43,12 @@ shibboleth_auth_client:
 
 ## Acknowledgements
 
-Thanks to [@markocupic](https://github.com/markocupic) who wrote the [SAC Login Bundle](https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle)
+* Thanks to [@markocupic](https://github.com/markocupic) who wrote the [SAC Login Bundle](https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle)
 which this module is heavily based on.
 
+* Thanks to [@aschempp](https://github.com/aschempp) who wrote
+  [Contao integration tests and the GitHub pipeline settings](https://github.com/terminal42/contao-changelanguage)
+  which we used as a base for our tests.
 
 
 
