@@ -58,26 +58,6 @@ class AuthUserChecker
     }
 
     /**
-     * Check if OAuth user is a SAC member.
-     */
-    public function checkIsSacMember(OAuthUser $oAuthUser): bool
-    {
-        if (!$this->isSacMember($oAuthUser)) {
-            $this->errorMessageManager->add2Flash(
-                new ErrorMessage(
-                    ErrorMessage::LEVEL_WARNING,
-                    $this->translator->trans('ERR.shibbolethLoginError_userIsNotSacMember_matter', [$oAuthUser->getFirstName()], 'contao_default'),
-                    $this->translator->trans('ERR.shibbolethLoginError_userIsNotSacMember_howToFix', [], 'contao_default'),
-                )
-            );
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Check for allowed SAC section membership.
      */
     public function checkIsMemberOfAllowedAffiliation(AuthUser $authUser, string $contaoScope): bool
@@ -146,19 +126,6 @@ class AuthUserChecker
         $arrGroupMembership = $this->getRoles($authUser);
 
         return array_unique(array_intersect($arrAllowedGroups, $arrGroupMembership));
-    }
-
-    /**
-     * Check if OAuth user is member of a SAC section.
-     */
-    public function isSacMember(OAuthUser $oAuthUser): bool
-    {
-        $strRoles = $oAuthUser->getRolesAsString();
-
-        // Search for NAV_MITGLIED_S00004250 or NAV_MITGLIED_S00004251, etc.
-        $pattern = static::NAV_SECTION_ID_REGEX;
-
-        return preg_match($pattern, $strRoles) && !empty($oAuthUser->getId()) && !empty($oAuthUser->getSacMemberId());
     }
 
     /**
