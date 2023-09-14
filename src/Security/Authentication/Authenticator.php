@@ -103,23 +103,12 @@ class Authenticator
             throw new RedirectResponseException($failurePath);
         }
 
-//        // Check if user is a SAC member
-//        if ($blnAllowLoginToSacMembersOnly) {
-//            if (!$this->authUserChecker->checkIsSacMember($authUser)) {
-//                $this->dispatchInvalidLoginAttemptEvent(InvalidLoginAttemptEvent::FAILED_CHECK_IS_SAC_MEMBER, $contaoScope, $authUser);
-//
-//                throw new RedirectResponseException($oAuth2Client->getFailurePath());
-//            }
-//        }
+        // Check if user is member of an allowed group
+        if (!$this->authUserChecker->checkIsMemberOfAllowedAffiliation($authUser, $contaoScope)) {
+            $this->dispatchInvalidLoginAttemptEvent(InvalidLoginAttemptEvent::FAILED_CHECK_IS_MEMBER_OF_ALLOWED_SECTION, $contaoScope, $authUser);
 
-//        // Check if user is member of an allowed section
-//        if ($blnAllowLoginToPredefinedSectionsOnly) {
-//            if (!$this->authUserChecker->checkIsMemberOfAllowedSection($authUser, $contaoScope)) {
-//                $this->dispatchInvalidLoginAttemptEvent(InvalidLoginAttemptEvent::FAILED_CHECK_IS_MEMBER_OF_ALLOWED_SECTION, $contaoScope, $authUser);
-//
-//                throw new RedirectResponseException($oAuth2Client->getFailurePath());
-//            }
-//        }
+            throw new RedirectResponseException($failurePath);
+        }
 
         // Check has valid email address
         // This test should always be positive,
@@ -185,7 +174,7 @@ class Authenticator
 
         // Contao system log
         $logText = sprintf(
-            '%s User "%s" [%s] has logged in with SAC OPENID CONNECT APP.',
+            '%s User "%s" [%s] has logged in with Shibboleth Login.',
             ContaoCoreBundle::SCOPE_FRONTEND === $contaoScope ? 'Frontend' : 'Backend',
             $authUser->getFullName(),
             $authUser->getId()

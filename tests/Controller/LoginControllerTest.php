@@ -48,6 +48,30 @@ class LoginControllerTest extends ContaoTestCase
         $this->fail('Redirect exception expected');
     }
 
+    public function testFrontendInvokeWrongGroup(): void
+    {
+        $session = new Session(new MockFileSessionStorage());
+
+        $request = new Request(['redirectAfterSuccess' => 'https://www.example.com/success'], [], [], [], [], [
+            'REDIRECT_unscoped-affiliation' => 'notstaff',
+            'REDIRECT_uid' => 'testuser',
+            'REDIRECT_sn' => 'User',
+            'REDIRECT_mail' => 'testuser@example.com',
+            'REDIRECT_cn' => 'Test Tester',
+        ]);
+        $request->setSession($session);
+        $this->getContainer()->get('request_stack')->push($request);
+
+        try {
+            $this->controller->__invoke($request, 'frontend');
+        } catch (RedirectResponseException $exception) {
+            $this->assertTrue($exception->getResponse()->isRedirect());
+            $this->assertEquals('https://www.example.com/success?failure=1', $exception->getResponse()->headers->get('Location'));
+            return;
+        }
+        $this->fail('Redirect exception expected');
+    }
+
     public function testAdminPanelInvoke(): void
     {
 

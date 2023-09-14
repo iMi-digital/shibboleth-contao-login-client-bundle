@@ -40,12 +40,6 @@ class ContaoShibbolethLoginController extends AbstractController
     {
         $this->framework->initialize(ContaoCoreBundle::SCOPE_FRONTEND === $_scope);
 
-////        var_dump($_SERVER);
-//        var_dump($_SERVER['REDIRECT_unscoped-affiliation']);
-//        var_dump($_SERVER['REDIRECT_uid']);
-//        var_dump($_SERVER['REDIRECT_sn']);
-//        var_dump($_SERVER['REDIRECT_mail']);
-//        var_dump($_SERVER['REDIRECT_cn']);
         if (!$request->server->has('REDIRECT_unscoped-affiliation')) {
             throw new \iMi\ContaoShibbolethLoginClientBundle\Client\Exception\InvalidStateException('Required field missing');
         }
@@ -58,7 +52,7 @@ class ContaoShibbolethLoginController extends AbstractController
         // We have an access token!
         // But the user is still not logged in against the Contao backend/frontend firewall.
         $userData = [
-            'group' => $request->server->get('REDIRECT_unscoped-affiliation'),
+            'groups' => $request->server->get('REDIRECT_unscoped-affiliation'),
             'uid' => $request->server->get('REDIRECT_uid'),
             'sn' => $request->server->get('REDIRECT_sn'),
             'mail' => $request->server->get('REDIRECT_mail'),

@@ -80,9 +80,9 @@ class AuthUserChecker
     /**
      * Check for allowed SAC section membership.
      */
-    public function checkIsMemberOfAllowedSection(OAuthUser $oAuthUser, string $contaoScope): bool
+    public function checkIsMemberOfAllowedAffiliation(AuthUser $authUser, string $contaoScope): bool
     {
-        $arrMembership = $this->getAllowedSacSectionIds($oAuthUser, $contaoScope);
+        $arrMembership = $this->getAllowedAffiliations($authUser, $contaoScope);
 
         if (\count($arrMembership) > 0) {
             return true;
@@ -91,7 +91,7 @@ class AuthUserChecker
         $this->errorMessageManager->add2Flash(
             new ErrorMessage(
                 ErrorMessage::LEVEL_WARNING,
-                $this->translator->trans('ERR.shibbolethLoginError_userIsNotMemberOfAllowedSection_matter', [$oAuthUser->getFirstName()], 'contao_default'),
+                $this->translator->trans('ERR.shibbolethLoginError_userIsNotMemberOfAllowedSection_matter', [$authUser->getFirstName()], 'contao_default'),
                 $this->translator->trans('ERR.shibbolethLoginError_userIsNotMemberOfAllowedSection_howToFix', [], 'contao_default'),
             )
         );
@@ -126,7 +126,7 @@ class AuthUserChecker
     /**
      * Return all allowed SAC section ids a OAuth user belongs to.
      */
-    public function getAllowedSacSectionIds(AuthUser $authUser, string $contaoScope): array
+    public function getAllowedAffiliations(AuthUser $authUser, string $contaoScope): array
     {
         /** @var System $systemAdapter */
         $systemAdapter = $this->framework->getAdapter(System::class);
@@ -143,7 +143,7 @@ class AuthUserChecker
             ;
         }
 
-        $arrGroupMembership = $this->getSacSectionIds($authUser);
+        $arrGroupMembership = $this->getRoles($authUser);
 
         return array_unique(array_intersect($arrAllowedGroups, $arrGroupMembership));
     }
@@ -164,17 +164,14 @@ class AuthUserChecker
     /**
      * Return all SAC section ids a OAuth user belongs to.
      */
-    private function getSacSectionIds(AuthUser $authUser): array
+    private function getRoles(AuthUser $authUser): array
     {
-        $strRoles = $authUser->getRolesAsString();
+        $strRoles = $authUser->getRolesAsArray();
 
         if (empty($strRoles)) {
             return [];
         }
 
-        // Search for NAV_MITGLIED_S00004250 or NAV_MITGLIED_S00004251, etc.
-        $pattern = static::NAV_SECTION_ID_REGEX;
-
-        return preg_match_all($pattern, $strRoles, $matches) ? array_unique(array_map('intval', $matches[1])) : [];
+        return $strRoles;
     }
 }

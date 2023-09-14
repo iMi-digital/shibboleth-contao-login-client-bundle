@@ -199,7 +199,7 @@ class ContaoUser
 
         if (null !== $objMember) {
             // Correctly format the section ids (the key is important!): e.g. [0 => '4250', 2 => '4252'] -> user is member of two SAC Sektionen/Ortsgruppen
-            $arrSectionIdsUserIsAllowed = array_map('strval', $this->resourceOwnerChecker->getAllowedSacSectionIds($this->resourceOwner, ContaoCoreBundle::SCOPE_FRONTEND));
+            $arrSectionIdsUserIsAllowed = array_map('strval', $this->resourceOwnerChecker->getAllowedAffiliations($this->resourceOwner, ContaoCoreBundle::SCOPE_FRONTEND));
             // FIXME: set sections necessary=
 //            $arrSectionIdsAll = array_map('strval', array_keys($this->util->listSacSections()));
             $arrSectionIdsAll = [];

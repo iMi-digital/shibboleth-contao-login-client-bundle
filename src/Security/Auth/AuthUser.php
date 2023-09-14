@@ -116,12 +116,12 @@ class AuthUser
 
     public function getRolesAsString(): string
     {
-        return $this->arrData['unscoped-affiliation'] ?? '';
+        return $this->arrData['groups'] ?? '';
     }
 
     public function getRolesAsArray(): array
     {
-        return array_map(static fn ($item) => trim($item, '"'), explode(',', $this->arrData['unscoped-affiliation']));
+        return array_map(static fn ($item) => trim($item, '"'), explode(',', $this->arrData['groups']));
     }
 
     public function getDummyResourceOwnerData(bool $isMember): array

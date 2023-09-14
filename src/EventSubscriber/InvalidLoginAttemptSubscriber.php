@@ -60,7 +60,7 @@ class InvalidLoginAttemptSubscriber implements EventSubscriberInterface
 
         if (ContaoCoreBundle::SCOPE_FRONTEND === $loginEvent->getContaoScope()) {
             $memberModelAdapter = $this->framework->getAdapter(MemberModel::class);
-            $userModel = $memberModelAdapter->findByUsername($resourceOwner->getSacMemberId());
+            $userModel = $memberModelAdapter->findByUsername($resourceOwner->getId());
             $logLevel = ContaoLogConfig::SAC_OAUTH2_FRONTEND_LOGIN_FAIL;
             $logText = sprintf(
                 'Shibboleth (SSO-Frontend-Login) failed for user "%s %s" with member id [%s]. Cause: %s. JSON Payload: %s',
