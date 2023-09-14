@@ -2,7 +2,7 @@
 $GLOBALS['TL_CSS'][] = 'bundles/markocupicswissalpineclubcontaologinclient/css/sac_login_button.min.css|static';
 ?>
 <!-- indexer::stop -->
-<div class="<?= $this->class ?> <?= $this->logout ? 'logout' : 'login' ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
+<div class="mod_login <?= $this->class ?> <?= $this->logout ? 'logout' : 'login' ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
 
 <?php if ($this->headline): ?>
 <<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
@@ -12,9 +12,7 @@ $GLOBALS['TL_CSS'][] = 'bundles/markocupicswissalpineclubcontaologinclient/css/s
 <form action="/Shibboleth.sso/Login" id="shibbolethLoginFe_<?= $this->id ?>" class="sac-shibboleth-login-fe" method="get">
   <div class="formbody">
     <input type="hidden" name="target" value="<?= $this->shibbolethLoginUrl ?>">
-    <div class="sac-login-button-group sac-login-button-group-lg">
-      <button type="submit"><span class="sac-login-button-text"><?= $this->btnLbl ?> <span style="font-size:1rem;">&#8594</span></span></button>
-    </div>
+  <button type="submit" class="submit"><?= $this->btnLbl ?></button>
   </div>
 </form>
 
