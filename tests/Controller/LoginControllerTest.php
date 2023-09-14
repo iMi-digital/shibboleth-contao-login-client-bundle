@@ -74,7 +74,7 @@ class LoginControllerTest extends ContaoTestCase
             $this->controller->__invoke($request, 'frontend');
         } catch (RedirectResponseException $exception) {
             $this->assertTrue($exception->getResponse()->isRedirect());
-            $this->assertEquals('https://www.example.com/success?failure=1', $exception->getResponse()->headers->get('Location'));
+            $this->assertEquals('https://www.example.com/success?sso_error=1', $exception->getResponse()->headers->get('Location'));
             return;
         }
         $this->fail('Redirect exception expected');
@@ -98,7 +98,7 @@ class LoginControllerTest extends ContaoTestCase
             $this->controller->__invoke($request, 'backend');
         } catch (RedirectResponseException $exception) {
             $this->assertTrue($exception->getResponse()->isRedirect());
-            $this->assertEquals('https://www.example.com/contao?failure=1', $exception->getResponse()->headers->get('Location'));
+            $this->assertEquals('https://www.example.com/contao?sso_error=1', $exception->getResponse()->headers->get('Location'));
             return;
         }
         $this->fail('Redirect exception expected');

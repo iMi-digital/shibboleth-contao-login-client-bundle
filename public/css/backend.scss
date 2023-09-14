@@ -13,8 +13,8 @@
   .formbody {
     padding: 0;
 
-    .btn.sac-login-backend-button {
-      background-color: #aa0000;
+    .btn.shibboleth-login-backend-button {
+      background-color: orange;
       color: white;
       line-height: 1;
       padding: 12px 12px;
@@ -23,7 +23,7 @@
       border: 0;
     }
 
-    .sac-login-fe-link {
+    .shibboleth-login-fe-link {
       margin-top: 1rem;
       display: flex;
       justify-content: end;
@@ -31,14 +31,14 @@
 
   }
 
-  .sac-shibboleth-error.backend {
+  .shibboleth-error.backend {
     .error-box {
       margin-top: 1rem;
       padding-top: 1rem;
 
       .error-title {
         font-size: .875rem;
-        color: #ff2117;
+        color: orange;
         font-weight: 600;
         margin-top: 10px;
       }

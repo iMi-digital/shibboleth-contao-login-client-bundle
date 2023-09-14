@@ -1,25 +1,25 @@
 <div id="mod_shibboleth_backend_login">
   <h1><?= $this->trans('MSC.loginBT', [], 'contao_default') ?></h1>
-  <form action="/<?= $this->route('shibboleth_sso_login_backend') ?>" id="shibbolethLoginBe" class="sac-shibboleth-login-be" method="post">
+  <form action="/<?= $this->route('shibboleth_sso_login_backend') ?>" id="shibbolethLoginBe" class="shibboleth-login-be" method="post">
     <div class="formbody">
-      <input type="hidden" name="FORM_SUBMIT" value="sac-shibboleth-login-be">
+      <input type="hidden" name="FORM_SUBMIT" value="shibboleth-login-be">
       <?php if ($this->enableCsrfTokenCheck): ?>
       <input type="hidden" name="REQUEST_TOKEN" value="<?= $this->rt ?>">
       <?php endif; ?>
       <input type="hidden" name="_target_path" value="<?= $this->targetPath ?>">
       <input type="hidden" name="_failure_path" value="<?= $this->failurePath ?>">
       <input type="hidden" name="_always_use_target_path" value="<?= $this->alwaysUseTargetPath ?>">
-      <div class="sac-login-button-group">
-        <button type="submit"><span class="sac-login-button-text"><?= $this->trans('MSC.loginWithShibbolethSso', [], 'contao_default') ?> <span style="font-size:1rem;">&#8594</span></span></button>
+      <div class="shibboleth-login-button-group">
+        <button type="submit"><span class="shibboleth-login-button-text"><?= $this->trans('MSC.loginWithShibbolethSso', [], 'contao_default') ?> <span style="font-size:1rem;">&#8594</span></span></button>
       </div>
-      <div class="sac-login-fe-link">
+      <div class="shibboleth-login-fe-link">
         <a href="/" class="footer_preview"><?= $this->trans('MSC.feLink', [], 'contao_default') ?> ›</a>
       </div>
     </div>
   </form>
 
   <?php if ($this->error): ?>
-  <div class="trigger-ids-kill-session sac-shibboleth-error <?= $this->error['level'] ?> backend">
+  <div class="trigger-ids-kill-session shibboleth-error <?= $this->error['level'] ?> backend">
 
     <?php if ('' != $this->error['matter']): ?>
     <div class="error-matter-box error-box">

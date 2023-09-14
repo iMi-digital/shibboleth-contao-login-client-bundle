@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Shibboleth Contao Login Client Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) iMi digital GmbH <digital@imi.de>, based on work by Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -80,7 +80,10 @@ class Authenticator
         // For testing & debugging purposes only
         //$authUser->overrideData($authUser->getDummyResourceOwnerData(true));
 
-        $failurePath = $redirectAfterSuccess . '?failure=1';
+        if (is_string($redirectAfterSuccess)) {
+            $redirectAfterSuccess = str_replace('?sso_error=1', '', $redirectAfterSuccess);
+        }
+        $failurePath = $redirectAfterSuccess . '?sso_error=1';
 
         if ($isDebugMode) {
             // Log OAuth user details
@@ -112,8 +115,6 @@ class Authenticator
 
         // Check has valid email address
         // This test should always be positive,
-        // because creating an account at https://www.sac-cas.ch
-        // requires already a valid email address
         if (!$this->authUserChecker->checkHasValidEmailAddress($authUser)) {
             $this->dispatchInvalidLoginAttemptEvent(InvalidLoginAttemptEvent::FAILED_CHECK_HAS_VALID_EMAIL_ADDRESS, $contaoScope, $authUser);
 

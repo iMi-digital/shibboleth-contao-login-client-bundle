@@ -1,7 +1,7 @@
 "use strict";
 
 window.addEventListener('DOMContentLoaded', () => {
-    let login_buttons = document.querySelectorAll('.sac-login-button-group button[type="submit"]');
+    let login_buttons = document.querySelectorAll('.shibboleth-login-button-group button[type="submit"]');
     let i;
     for (i = 0; i < login_buttons.length; ++i) {
         let login_button = login_buttons[i];
@@ -32,8 +32,8 @@ window.addEventListener('DOMContentLoaded', () => {
         login_button.setAttribute('disabled', '');
 
         window.setTimeout(() => {
-            let formBe = login_button.closest('form.sac-shibboleth-login-be');
-            let formFe = login_button.closest('form.sac-shibboleth-login-fe');
+            let formBe = login_button.closest('form.shibboleth-login-be');
+            let formFe = login_button.closest('form.shibboleth-login-fe');
 
             if (formBe) {
                 formBe.submit();

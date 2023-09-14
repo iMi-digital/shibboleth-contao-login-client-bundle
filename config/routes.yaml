@@ -1,4 +1,4 @@
-sac_ch_sso_auth:
+shibboleth_sso_auth:
   resource: ../src/Controller
   type: annotation
 

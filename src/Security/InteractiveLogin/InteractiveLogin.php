@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Shibboleth Contao Login Client Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) iMi digital GmbH <digital@imi.de>, based on work by Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -81,7 +81,7 @@ class InteractiveLogin
             throw new \Exception('Invalid username.');
         }
 
-        // Load user by identifier (sac member id)
+        // Load user by identifier (uid)
         $userClass = ContaoCoreBundle::SCOPE_FRONTEND === $contaoUser->getContaoScope() ? FrontendUser::class : BackendUser::class;
         $userProvider = new ContaoUserProvider($this->framework, $session, $userClass, $this->logger);
 
