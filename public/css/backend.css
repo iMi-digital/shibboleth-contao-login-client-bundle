@@ -1,12 +1,3 @@
-.tl_login_form .formbody {
-  padding-top: 0;
-}
-
-body {
-  background-image: url("../../../bundles/markocupicswissalpineclubcontaologinclient/img/logo_sac_small.svg");
-  background-size: 6em auto;
-}
-
 #mod_shibboleth_backend_login {
   padding: 45px;
 }
@@ -18,7 +9,7 @@ body {
 #mod_shibboleth_backend_login .formbody {
   padding: 0;
 }
-#mod_shibboleth_backend_login .formbody .btn.sac-login-backend-button {
+#mod_shibboleth_backend_login .formbody .btn.shibboleth-login-backend-button {
   background-color: #aa0000;
   color: white;
   line-height: 1;
@@ -27,22 +18,22 @@ body {
   width: 100%;
   border: 0;
 }
-#mod_shibboleth_backend_login .formbody .sac-login-fe-link {
+#mod_shibboleth_backend_login .formbody .shibboleth-login-fe-link {
   margin-top: 1rem;
   display: flex;
   justify-content: end;
 }
-#mod_shibboleth_backend_login .sac-shibboleth-error.backend .error-box {
+#mod_shibboleth_backend_login .shibboleth-error.backend .error-box {
   margin-top: 1rem;
   padding-top: 1rem;
 }
-#mod_shibboleth_backend_login .sac-shibboleth-error.backend .error-box .error-title {
+#mod_shibboleth_backend_login .shibboleth-error.backend .error-box .error-title {
   font-size: 0.875rem;
   color: #ff2117;
   font-weight: 600;
   margin-top: 10px;
 }
-#mod_shibboleth_backend_login .sac-shibboleth-error.backend .error-box p {
+#mod_shibboleth_backend_login .shibboleth-error.backend .error-box p {
   font-size: 0.875rem;
   line-height: normal;
   color: #797979;
@@ -70,5 +61,3 @@ body {
 #mod_shibboleth_backend_login .login-button-separator-container .login-button-separator::after {
   margin-left: 0.75em;
 }
-
-/*# sourceMappingURL=backend.css.map */

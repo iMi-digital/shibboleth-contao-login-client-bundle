@@ -25,7 +25,7 @@ window.onload = function () {
     }
 
     // Kill session if login has been aborted due to errors
-    if (document.querySelectorAll('.trigger-ids-kill-session.sac-shibboleth-error').length) {
+    if (document.querySelectorAll('.trigger-ids-kill-session.shibboleth-error').length) {
         logout('',false);
     }
     else if (RegExp("^/contao\/login(.*)$", "g").test(window.location.pathname)) {

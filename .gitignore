@@ -1,4 +1,4 @@
-# Created by .ignore support plugin (hsz.mobi)
 /composer.lock
 /vendor
 phpunit.xml
+.phpunit.result.cache
