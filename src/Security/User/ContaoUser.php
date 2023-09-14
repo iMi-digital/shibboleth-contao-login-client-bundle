@@ -232,7 +232,7 @@ class ContaoUser
 
 
 
-                $set['groups'] = serialize($arrGroups);
+                $set['`groups`'] = serialize($arrGroups);
             }
 
             // Set random password
