@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace iMi\ContaoShibbolethLoginClientBundle\Tests;
 
 use Contao\Model\Registry;
-use Contao\PageModel;
+use Contao\MemberGroupModel;
 use Contao\System;
 use Contao\TestCase\ContaoDatabaseTrait;
 use Contao\TestCase\FunctionalTestCase;
@@ -40,32 +40,13 @@ abstract class ContaoTestCase extends FunctionalTestCase
         return (int) $connection->lastInsertId();
     }
 
-    protected function createRootPage(string $dns = '', string $language = '', bool $fallback = true, $languageRoot = 0, bool $published = true): PageModel
+    protected function createMemberGroup(): MemberGroupModel
     {
-        $pageModel = new PageModel();
-        $pageModel->type = 'root';
-        $pageModel->title = 'foobar';
-        $pageModel->dns = $dns;
-        $pageModel->language = $language;
-        $pageModel->fallback = $fallback;
-        $pageModel->languageRoot = $languageRoot;
-        $pageModel->published = $published;
+        $model = new MemberGroupModel();
+        $model->name = 'staff';
 
-        $pageModel->save();
+        $model->save();
 
-        return $pageModel;
-    }
-
-    protected function createPage($pid = 0, $languageMain = 0, bool $published = true): PageModel
-    {
-        $pageModel = new PageModel();
-        $pageModel->pid = $pid;
-        $pageModel->type = 'regular';
-        $pageModel->languageMain = $languageMain;
-        $pageModel->published = $published;
-
-        $pageModel->save();
-
-        return $pageModel;
+        return $model;
     }
 }

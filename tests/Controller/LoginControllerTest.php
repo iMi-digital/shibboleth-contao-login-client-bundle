@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace iMi\ContaoShibbolethLoginClientBundle\Tests\Controller;
 
 use Contao\CoreBundle\Exception\RedirectResponseException;
+use Contao\MemberModel;
 use Contao\TestCase\ContaoDatabaseTrait;
 use iMi\ContaoShibbolethLoginClientBundle\Controller\ContaoShibbolethLoginController;
 use iMi\ContaoShibbolethLoginClientBundle\Tests\ContaoTestCase;
@@ -24,8 +25,10 @@ class LoginControllerTest extends ContaoTestCase
         $this->controller = $this->getContainer()->get(\iMi\ContaoShibbolethLoginClientBundle\Controller\ContaoShibbolethLoginController::class);
     }
 
-    public function testFrontendInvoke(): void
+    public function testCanLoginWithGroupStaffOnFrontend(): void
     {
+        $memberGroup = $this->createMemberGroup();
+
         $session = new Session(new MockFileSessionStorage());
 
         $request = new Request(['redirectAfterSuccess' => 'https://www.example.com/success'], [], [], [], [], [
@@ -43,12 +46,17 @@ class LoginControllerTest extends ContaoTestCase
         } catch (RedirectResponseException $exception) {
             $this->assertTrue($exception->getResponse()->isRedirect());
             $this->assertEquals('https://www.example.com/success', $exception->getResponse()->headers->get('Location'));
+
+            $user = MemberModel::findByUsername('testuser');
+            $this->assertEquals([$memberGroup->id], unserialize($user->groups));
+
             return;
         }
+
         $this->fail('Redirect exception expected');
     }
 
-    public function testFrontendInvokeWrongGroup(): void
+    public function testCannotLoginWithInvalidGroupOnFrontend(): void
     {
         $session = new Session(new MockFileSessionStorage());
 
@@ -72,9 +80,8 @@ class LoginControllerTest extends ContaoTestCase
         $this->fail('Redirect exception expected');
     }
 
-    public function testAdminPanelInvoke(): void
+    public function testCannotLoginInAdminPanelBecauseUserDoesNotExist(): void
     {
-
         $session = new Session(new MockFileSessionStorage());
 
         $request = new Request(['redirectAfterSuccess' => 'https://www.example.com/contao'], [], [], [], [], [

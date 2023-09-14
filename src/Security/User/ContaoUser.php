@@ -18,6 +18,7 @@ use Contao\BackendUser;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\FrontendUser;
+use Contao\MemberGroupModel;
 use Contao\MemberModel;
 use Contao\StringUtil;
 use Contao\System;
@@ -198,12 +199,6 @@ class ContaoUser
         $objMember = $this->getModel('tl_member');
 
         if (null !== $objMember) {
-            // Correctly format the section ids (the key is important!): e.g. [0 => '4250', 2 => '4252'] -> user is member of two SAC Sektionen/Ortsgruppen
-            $arrSectionIdsUserIsAllowed = array_map('strval', $this->resourceOwnerChecker->getAllowedAffiliations($this->resourceOwner, ContaoCoreBundle::SCOPE_FRONTEND));
-            // FIXME: set sections necessary=
-//            $arrSectionIdsAll = array_map('strval', array_keys($this->util->listSacSections()));
-            $arrSectionIdsAll = [];
-            $arrSectionIds = array_filter($arrSectionIdsAll, static fn ($v, $k) => \in_array($v, $arrSectionIdsUserIsAllowed, true), ARRAY_FILTER_USE_BOTH);
 
             // Update member details from JSON payload
             $set = [
@@ -224,14 +219,18 @@ class ContaoUser
 
             // Add member groups
             $arrGroups = $stringUtilAdapter->deserialize($objMember->groups, true);
-            $arrAutoGroups = $systemAdapter->getContainer()->getParameter('shibboleth_auth_client.shibboleth.add_to_frontend_user_groups');
+            $arrAddGroups = $systemAdapter->getContainer()->getParameter('shibboleth_auth_client.shibboleth.add_to_frontend_user_groups');
+            $groupsReceived = $this->resourceOwnerChecker->getAllowedAffiliations($this->resourceOwner, ContaoCoreBundle::SCOPE_FRONTEND);
+            $arrAddGroups = array_merge($arrAddGroups, $this->resolveGroupIds($groupsReceived));
 
-            if (!empty($arrAutoGroups) && \is_array($arrAutoGroups)) {
-                foreach ($arrAutoGroups as $groupId) {
+            if (!empty($arrAddGroups) && \is_array($arrAddGroups)) {
+                foreach ($arrAddGroups as $groupId) {
                     if (!\in_array($groupId, $arrGroups, false)) {
                         $arrGroups[] = $groupId;
                     }
                 }
+
+
 
                 $set['groups'] = serialize($arrGroups);
             }
@@ -408,4 +407,21 @@ class ContaoUser
             $this->updateFrontendUser();
         }
     }
+
+    private function resolveGroupIds(array $groupsReceived): array
+    {
+        $ids = [];
+
+        foreach($groupsReceived as $groupName) {
+            $model = MemberGroupModel::findByName($groupName);
+            if ($model === null) {
+                continue;
+            }
+
+            $ids[] = $model->id;
+        }
+
+        return $ids;
+    }
+
 }
