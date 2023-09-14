@@ -7,7 +7,7 @@ body {
   background-size: 6em auto;
 }
 
-#mod_swiss_alpine_club_oidc_backend_login {
+#mod_shibboleth_backend_login {
   padding: 45px;
   @media (min-width: 1160px) {
     & {
@@ -36,7 +36,7 @@ body {
 
   }
 
-  .sac-oidc-error.backend {
+  .sac-shibboleth-error.backend {
     .error-box {
       margin-top: 1rem;
       padding-top: 1rem;

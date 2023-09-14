@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\InteractiveLogin;
+namespace iMi\ContaoShibbolethLoginClientBundle\Security\InteractiveLogin;
 
 use Contao\BackendUser;
 use Contao\CoreBundle\ContaoCoreBundle;
@@ -23,8 +23,8 @@ use Contao\MemberModel;
 use Contao\System;
 use Contao\User;
 use Contao\UserModel;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Event\PreInteractiveLoginEvent;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\User\ContaoUser;
+use iMi\ContaoShibbolethLoginClientBundle\Event\PreInteractiveLoginEvent;
+use iMi\ContaoShibbolethLoginClientBundle\Security\User\ContaoUser;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;

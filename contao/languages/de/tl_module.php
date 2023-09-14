@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 // Legends
 $GLOBALS['TL_LANG']['tl_module']['button_legend'] = 'Button Einstellungen';
-$GLOBALS['TL_LANG']['tl_module']['sac_sso_login_settings'] = 'SAC SSO Login Einstellungen';
+$GLOBALS['TL_LANG']['tl_module']['shibboleth_sso_login_settings'] = 'Shibboleth SSO Login Einstellungen';
 
 // Fields
-$GLOBALS['TL_LANG']['tl_module']['swiss_alpine_club_oidc_frontend_login_btn_lbl'] = ['Button Label', 'Nutze dieses Feld, wenn du das Default-Label überschreiben möchtest.'];
-$GLOBALS['TL_LANG']['tl_module']['swiss_alpine_club_oidc_add_to_fe_groups'] = ['Frontend Member automatisch diesen Mitgliedergruppen zuweisen', 'Geben Sie an, welchen Mitgliedergruppen Frontend Benutzer beim Login zugeordnet werden sollen.'];
-$GLOBALS['TL_LANG']['tl_module']['swiss_alpine_club_oidc_add_module'] = ['SAC Login Button anhängen', 'Soll dem Login Formular ein SAC Login (SSO) Button angehängt werden?'];
-$GLOBALS['TL_LANG']['tl_module']['swiss_alpine_club_oidc_module'] = ['SAC Login Button anhängen', 'Soll dem Login Formular ein SAC Login (SSO) Button angehängt werden?'];
+$GLOBALS['TL_LANG']['tl_module']['shibboleth_frontend_login_btn_lbl'] = ['Button Label', 'Nutze dieses Feld, wenn du das Default-Label überschreiben möchtest.'];
+$GLOBALS['TL_LANG']['tl_module']['shibboleth_add_to_fe_groups'] = ['Frontend Member automatisch diesen Mitgliedergruppen zuweisen', 'Geben Sie an, welchen Mitgliedergruppen Frontend Benutzer beim Login zugeordnet werden sollen.'];
+$GLOBALS['TL_LANG']['tl_module']['shibboleth_add_module'] = ['Shibboleth Login Button anhängen', 'Soll dem Login Formular ein Shibboleth Login (SSO) Button angehängt werden?'];
+$GLOBALS['TL_LANG']['tl_module']['shibboleth_module'] = ['Shibboleth Login Button anhängen', 'Soll dem Login Formular ein Shibboleth Login (SSO) Button angehängt werden?'];

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -12,15 +12,15 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\EventSubscriber;
+namespace iMi\ContaoShibbolethLoginClientBundle\EventSubscriber;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\MemberModel;
 use Contao\UserModel;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Config\ContaoLogConfig;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Event\InvalidLoginAttemptEvent;
+use iMi\ContaoShibbolethLoginClientBundle\Config\ContaoLogConfig;
+use iMi\ContaoShibbolethLoginClientBundle\Event\InvalidLoginAttemptEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use function Safe\json_encode;
@@ -53,25 +53,25 @@ class InvalidLoginAttemptSubscriber implements EventSubscriberInterface
         $logArgs = [
             $resourceOwner->getFirstName(),
             $resourceOwner->getLastName(),
-            $resourceOwner->getSacMemberId(),
+            $resourceOwner->getId(),
             $loginEvent->getCauseOfError(),
             json_encode($resourceOwner->toArray()),
         ];
 
         if (ContaoCoreBundle::SCOPE_FRONTEND === $loginEvent->getContaoScope()) {
             $memberModelAdapter = $this->framework->getAdapter(MemberModel::class);
-            $userModel = $memberModelAdapter->findByUsername($resourceOwner->getSacMemberId());
+            $userModel = $memberModelAdapter->findByUsername($resourceOwner->getId());
             $logLevel = ContaoLogConfig::SAC_OAUTH2_FRONTEND_LOGIN_FAIL;
             $logText = sprintf(
-                'SAC oauth2 (SSO-Frontend-Login) failed for user "%s %s" with member id [%s]. Cause: %s. JSON Payload: %s',
+                'Shibboleth (SSO-Frontend-Login) failed for user "%s %s" with member id [%s]. Cause: %s. JSON Payload: %s',
                 ...$logArgs,
             );
         } else {
             $userModelAdapter = $this->framework->getAdapter(UserModel::class);
-            $userModel = $userModelAdapter->findBySacMemberId($resourceOwner->getSacMemberId());
+            $userModel = $userModelAdapter->findByUsername($resourceOwner->getId());
             $logLevel = ContaoLogConfig::SAC_OAUTH2_BACKEND_LOGIN_FAIL;
             $logText = sprintf(
-                'SAC oauth2 (SSO-Backend-Login) failed for user "%s %s" with member id [%s]. Cause: %s. JSON Payload: %s',
+                'Shibboleth (SSO-Backend-Login) failed for user "%s %s" with member id [%s]. Cause: %s. JSON Payload: %s',
                 ...$logArgs,
             );
         }

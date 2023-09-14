@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\EventListener\Contao;
+namespace iMi\ContaoShibbolethLoginClientBundle\EventListener\Contao;
 
 use Contao\BackendTemplate;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
@@ -48,22 +48,15 @@ class ParseBackendTemplateListener
             /** @var Environment $environmentAdapter */
             $environmentAdapter = $this->framework->getAdapter(Environment::class);
 
-            if (!$systemAdapter->getContainer()->getParameter('sac_oauth2_client.oidc.enable_backend_sso')) {
+            if (!$systemAdapter->getContainer()->getParameter('shibboleth_auth_client.shibboleth.enable_backend_sso')) {
                 return $strContent;
             }
 
-            $template = new BackendTemplate('mod_swiss_alpine_club_oidc_backend_login');
+            $template = new BackendTemplate('mod_shibboleth_backend_login');
 
             // Get request token (disabled by default)
             $template->rt = '';
             $template->enableCsrfTokenCheck = false;
-
-            if ($systemAdapter->getContainer()->getParameter('sac_oauth2_client.oidc.enable_csrf_token_check')) {
-                if (preg_match('/name="REQUEST_TOKEN"\s+value=\"([^\']*?)\"/', $strContent, $matches)) {
-                    $template->rt = $matches[1];
-                    $template->enableCsrfTokenCheck = true;
-                }
-            }
 
             $template->targetPath = '';
 
@@ -81,7 +74,7 @@ class ParseBackendTemplateListener
             }
 
             // Check for error messages
-            $flashBagKey = $systemAdapter->getContainer()->getParameter('sac_oauth2_client.session.flash_bag_key');
+            $flashBagKey = $systemAdapter->getContainer()->getParameter('shibboleth_auth_client.session.flash_bag_key');
             $session = $this->requestStack->getCurrentRequest()->getSession();
             $flashBag = $session->getFlashBag()->get($flashBagKey);
 
@@ -95,7 +88,7 @@ class ParseBackendTemplateListener
                 $template->error = $arrError;
             }
 
-            $template->disableContaoLogin = $systemAdapter->getContainer()->getParameter('sac_oauth2_client.backend.disable_contao_login');
+            $template->disableContaoLogin = $systemAdapter->getContainer()->getParameter('shibboleth_auth_client.backend.disable_contao_login');
 
             $strAppendBefore = '<form';
 
@@ -109,7 +102,7 @@ class ParseBackendTemplateListener
             $strContent = str_replace($strAppendBefore, $ssoLoginForm.$strAppendBefore, $strContent);
 
             // Remove Contao login form
-            $blnDisableContaoLogin = $systemAdapter->getContainer()->getParameter('sac_oauth2_client.backend.disable_contao_login');
+            $blnDisableContaoLogin = $systemAdapter->getContainer()->getParameter('shibboleth_auth_client.backend.disable_contao_login');
 
             if (true === $blnDisableContaoLogin) {
                 $strContent = preg_replace('/<form class="tl_login_form"[^>]*>(.*?)<\/form>/is', '', $strContent);

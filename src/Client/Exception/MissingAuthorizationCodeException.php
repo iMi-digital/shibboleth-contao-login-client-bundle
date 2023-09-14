@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Client\Exception;
+namespace iMi\ContaoShibbolethLoginClientBundle\Client\Exception;
 
 /**
  * Thrown if the "state" is invalid after the auth code redirect.

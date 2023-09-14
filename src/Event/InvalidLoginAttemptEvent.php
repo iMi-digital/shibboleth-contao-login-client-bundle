@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -12,15 +12,15 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Event;
+namespace iMi\ContaoShibbolethLoginClientBundle\Event;
 
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\OAuth\OAuthUser;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\User\ContaoUser;
+use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
+use iMi\ContaoShibbolethLoginClientBundle\Security\User\ContaoUser;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class InvalidLoginAttemptEvent extends Event
 {
-    public const NAME = 'sac_oauth2_client.invalid_login_attempt';
+    public const NAME = 'shibboleth_auth_client.invalid_login_attempt';
 
     // Checks
     public const FAILED_CHECK_HAS_UUID = 'failed.check.has.uuid';
@@ -33,7 +33,7 @@ class InvalidLoginAttemptEvent extends Event
     public function __construct(
         private readonly string $causeOfError,
         private readonly string $contaoScope,
-        private readonly OAuthUser $resourceOwner,
+        private readonly AuthUser $resourceOwner,
         private readonly ContaoUser|null $contaoUser = null,
     ) {
     }
@@ -48,7 +48,7 @@ class InvalidLoginAttemptEvent extends Event
         return $this->contaoScope;
     }
 
-    public function getResourceOwner(): OAuthUser
+    public function getResourceOwner(): AuthUser
     {
         return $this->resourceOwner;
     }

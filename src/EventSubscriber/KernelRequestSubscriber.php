@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\EventSubscriber;
+namespace iMi\ContaoShibbolethLoginClientBundle\EventSubscriber;
 
 use Contao\CoreBundle\Routing\ScopeMatcher;
 use JetBrains\PhpStorm\ArrayShape;
@@ -39,13 +39,9 @@ class KernelRequestSubscriber implements EventSubscriberInterface
     {
         $request = $e->getRequest();
 
-        $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicswissalpineclubcontaologinclient/js/ids-kill-session.min.js|static';
-        $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicswissalpineclubcontaologinclient/js/login-button-animation.min.js|static';
-        $GLOBALS['TL_CSS'][] = 'bundles/markocupicswissalpineclubcontaologinclient/css/sac_login_button.css|static';
-
         if ($this->scopeMatcher->isBackendRequest($request)) {
             if (str_contains($request->getUri(), $this->router->generate('contao_backend_login'))) {
-                $GLOBALS['TL_CSS'][] = 'bundles/markocupicswissalpineclubcontaologinclient/css/backend.min.css';
+                $GLOBALS['TL_CSS'][] = 'bundles/contaoshibbolethloginclient/css/backend.min.css';
             }
         }
     }

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -12,15 +12,12 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\OAuth;
+namespace iMi\ContaoShibbolethLoginClientBundle\Security\Auth;
 
-use League\OAuth2\Client\Provider\ResourceOwnerInterface;
-
-class OAuthUser implements ResourceOwnerInterface
+class AuthUser
 {
     public function __construct(
-        protected array $arrData,
-        protected string $resourceOwnerId,
+        protected array $arrData
     ) {
     }
 
@@ -38,7 +35,7 @@ class OAuthUser implements ResourceOwnerInterface
      */
     public function getId(): string
     {
-        return $this->arrData[$this->resourceOwnerId];
+        return $this->arrData['uid'];
     }
 
     /**
@@ -51,17 +48,17 @@ class OAuthUser implements ResourceOwnerInterface
 
     public function getSalutation(): string
     {
-        return $this->arrData['anredecode'] ?? '';
+        return '';
     }
 
     public function getLastName(): string
     {
-        return $this->arrData['familienname'] ?? '';
+        return $this->arrData['sn'] ?? '';
     }
 
     public function getFirstName(): string
     {
-        return $this->arrData['vorname'] ?? '';
+        return $this->arrData['cn'] ?? '';
     }
 
     /**
@@ -69,22 +66,22 @@ class OAuthUser implements ResourceOwnerInterface
      */
     public function getFullName(): string
     {
-        return $this->arrData['name'] ?? '';
+        return trim($this->getFirstName() . ' ' . $this->getLastName());
     }
 
     public function getStreet(): string
     {
-        return $this->arrData['strasse'] ?? '';
+        return '';
     }
 
     public function getPostal(): string
     {
-        return $this->arrData['plz'] ?? '';
+        return '';
     }
 
     public function getCity(): string
     {
-        return $this->arrData['ort'] ?? '';
+        return '';
     }
 
     public function getCountryCode(): string
@@ -94,42 +91,37 @@ class OAuthUser implements ResourceOwnerInterface
 
     public function getDateOfBirth(): string
     {
-        return $this->arrData['geburtsdatum'] ?? '';
-    }
-
-    public function getSacMemberId(): string
-    {
-        return preg_replace('/^0+/', '', $this->arrData['contact_number'] ?? '');
+        return '';
     }
 
     public function getEmail(): string
     {
-        return $this->arrData['email'] ?? '';
+        return $this->arrData['mail'] ?? '';
     }
 
     public function getPhoneMobile(): string
     {
-        return $this->arrData['telefonmobil'] ?? '';
+        return '';
     }
 
     public function getPhonePrivate(): string
     {
-        return $this->arrData['telefonp'] ?? '';
+        return '';
     }
 
     public function getPhoneBusiness(): string
     {
-        return $this->arrData['telefong'] ?? '';
+        return '';
     }
 
     public function getRolesAsString(): string
     {
-        return $this->arrData['Roles'] ?? '';
+        return $this->arrData['groups'] ?? '';
     }
 
     public function getRolesAsArray(): array
     {
-        return array_map(static fn ($item) => trim($item, '"'), explode(',', $this->arrData['Roles']));
+        return array_map(static fn ($item) => trim($item, '"'), explode(',', $this->arrData['groups']));
     }
 
     public function getDummyResourceOwnerData(bool $isMember): array

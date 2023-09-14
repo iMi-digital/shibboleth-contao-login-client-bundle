@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -12,21 +12,21 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Event;
+namespace iMi\ContaoShibbolethLoginClientBundle\Event;
 
 use Contao\CoreBundle\Security\User\ContaoUserProvider;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\OAuth\OAuthUser;
+use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
 use Symfony\Contracts\EventDispatcher\Event;
 
 final class PreInteractiveLoginEvent extends Event
 {
-    public const NAME = 'sac_oauth2_client.pre_interactive_login';
+    public const NAME = 'shibboleth_auth_client.pre_interactive_login';
 
     public function __construct(
         private readonly string $userIdentifier,
         private readonly string $userClass,
         private readonly ContaoUserProvider $userProvider,
-        private readonly OAuthUser $resourceOwner,
+        private readonly AuthUser $resourceOwner,
     ) {
     }
 

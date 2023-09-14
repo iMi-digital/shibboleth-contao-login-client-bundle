@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -12,22 +12,23 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\User;
+namespace iMi\ContaoShibbolethLoginClientBundle\Security\User;
 
 use Contao\BackendUser;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\FrontendUser;
+use Contao\MemberGroupModel;
 use Contao\MemberModel;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\UserModel;
 use Doctrine\DBAL\Connection;
 use Markocupic\SacEventToolBundle\DataContainer\Util;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\ErrorMessage\ErrorMessage;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\ErrorMessage\ErrorMessageManager;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\OAuth\OAuthUser;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\Security\OAuth\OAuthUserChecker;
+use iMi\ContaoShibbolethLoginClientBundle\ErrorMessage\ErrorMessage;
+use iMi\ContaoShibbolethLoginClientBundle\ErrorMessage\ErrorMessageManager;
+use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
+use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUserChecker;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -39,15 +40,14 @@ class ContaoUser
         private readonly Connection $connection,
         private readonly TranslatorInterface $translator,
         private readonly PasswordHasherFactoryInterface $hasherFactory,
-        private readonly OAuthUserChecker $resourceOwnerChecker,
+        private readonly AuthUserChecker $resourceOwnerChecker,
         private readonly ErrorMessageManager $errorMessageManager,
-        private readonly OAuthUser $resourceOwner,
-        private readonly Util $util,
+        private readonly AuthUser $resourceOwner,
         private readonly string $contaoScope,
     ) {
     }
 
-    public function getResourceOwner(): OAuthUser
+    public function getResourceOwner(): AuthUser
     {
         return $this->resourceOwner;
     }
@@ -81,14 +81,14 @@ class ContaoUser
             /** @var MemberModel $memberModelAdapter */
             $memberModelAdapter = $this->framework->getAdapter(MemberModel::class);
 
-            return $memberModelAdapter->findByUsername($this->resourceOwner->getSacMemberId());
+            return $memberModelAdapter->findByUsername($this->resourceOwner->getId());
         }
 
         if ('tl_user' === $strTable) {
             /** @var UserModel $userModelAdapter */
             $userModelAdapter = $this->framework->getAdapter(UserModel::class);
 
-            return $userModelAdapter->findOneBySacMemberId($this->resourceOwner->getSacMemberId());
+            return $userModelAdapter->findOneByUsername($this->resourceOwner->getId());
         }
 
         return null;
@@ -113,21 +113,21 @@ class ContaoUser
      */
     public function checkUserExists(): bool
     {
-        if (empty($this->resourceOwner->getSacMemberId()) || !$this->userExists()) {
+        if (empty($this->resourceOwner->getId()) || !$this->userExists()) {
             if (ContaoCoreBundle::SCOPE_FRONTEND === $this->getContaoScope()) {
                 $this->errorMessageManager->add2Flash(
                     new ErrorMessage(
                         ErrorMessage::LEVEL_WARNING,
-                        $this->translator->trans('ERR.sacOidcLoginError_userDoesNotExist_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
-                        $this->translator->trans('ERR.sacOidcLoginError_userDoesNotExist_howToFix', [], 'contao_default'),
-                        $this->translator->trans('ERR.sacOidcLoginError_userDoesNotExist_explain', [], 'contao_default'),
+                        $this->translator->trans('ERR.shibbolethLoginError_userDoesNotExist_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
+                        $this->translator->trans('ERR.shibbolethLoginError_userDoesNotExist_howToFix', [], 'contao_default'),
+                        $this->translator->trans('ERR.shibbolethLoginError_userDoesNotExist_explain', [], 'contao_default'),
                     )
                 );
             } else {
                 $this->errorMessageManager->add2Flash(
                     new ErrorMessage(
                         ErrorMessage::LEVEL_WARNING,
-                        $this->translator->trans('ERR.sacOidcLoginError_backendUserNotFound_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
+                        $this->translator->trans('ERR.shibbolethLoginError_backendUserNotFound_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
                     )
                 );
             }
@@ -176,9 +176,9 @@ class ContaoUser
         $this->errorMessageManager->add2Flash(
             new ErrorMessage(
                 ErrorMessage::LEVEL_WARNING,
-                $this->translator->trans('ERR.sacOidcLoginError_accountDisabled_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
+                $this->translator->trans('ERR.shibbolethLoginError_accountDisabled_matter', [$this->resourceOwner->getFirstName()], 'contao_default'),
                 '',
-                $this->translator->trans('ERR.sacOidcLoginError_accountDisabled_explain', [], 'contao_default'),
+                $this->translator->trans('ERR.shibbolethLoginError_accountDisabled_explain', [], 'contao_default'),
             )
         );
 
@@ -199,10 +199,6 @@ class ContaoUser
         $objMember = $this->getModel('tl_member');
 
         if (null !== $objMember) {
-            // Correctly format the section ids (the key is important!): e.g. [0 => '4250', 2 => '4252'] -> user is member of two SAC Sektionen/Ortsgruppen
-            $arrSectionIdsUserIsAllowed = array_map('strval', $this->resourceOwnerChecker->getAllowedSacSectionIds($this->resourceOwner, ContaoCoreBundle::SCOPE_FRONTEND));
-            $arrSectionIdsAll = array_map('strval', array_keys($this->util->listSacSections()));
-            $arrSectionIds = array_filter($arrSectionIdsAll, static fn ($v, $k) => \in_array($v, $arrSectionIdsUserIsAllowed, true), ARRAY_FILTER_USE_BOTH);
 
             // Update member details from JSON payload
             $set = [
@@ -211,37 +207,32 @@ class ContaoUser
                 // due to wrong type cast only.
                 'mobile' => $this->beautifyPhoneNumber($this->resourceOwner->getPhoneMobile()),
                 'phone' => $this->beautifyPhoneNumber($this->resourceOwner->getPhonePrivate()),
-                'uuid' => $this->resourceOwner->getId(),
                 'lastname' => $this->resourceOwner->getLastName(),
                 'firstname' => $this->resourceOwner->getFirstName(),
                 'street' => $this->resourceOwner->getStreet(),
                 'city' => $this->resourceOwner->getCity(),
                 'postal' => $this->resourceOwner->getPostal(),
                 'dateOfBirth' => false !== strtotime($this->resourceOwner->getDateOfBirth()) ? (string) strtotime($this->resourceOwner->getDateOfBirth()) : 0,
-                'gender' => 'HERR' === $this->resourceOwner->getSalutation() ? 'male' : 'female',
+                'gender' => $this->resourceOwner->getSalutation(),
                 'email' => $this->resourceOwner->getEmail(),
-                'sectionId' => serialize($arrSectionIds),
             ];
-
-            // Member has to be member of a valid SAC section
-            if ($systemAdapter->getContainer()->getParameter('sac_oauth2_client.oidc.allow_frontend_login_to_predefined_section_members_only')) {
-                $set['isSacMember'] = !empty($this->resourceOwnerChecker->getAllowedSacSectionIds($this->resourceOwner, ContaoCoreBundle::SCOPE_FRONTEND)) ? '1' : '';
-            } else {
-                $set['isSacMember'] = $this->resourceOwnerChecker->isSacMember($this->resourceOwner) ? '1' : '';
-            }
 
             // Add member groups
             $arrGroups = $stringUtilAdapter->deserialize($objMember->groups, true);
-            $arrAutoGroups = $systemAdapter->getContainer()->getParameter('sac_oauth2_client.oidc.add_to_frontend_user_groups');
+            $arrAddGroups = $systemAdapter->getContainer()->getParameter('shibboleth_auth_client.shibboleth.add_to_frontend_user_groups');
+            $groupsReceived = $this->resourceOwnerChecker->getAllowedAffiliations($this->resourceOwner, ContaoCoreBundle::SCOPE_FRONTEND);
+            $arrAddGroups = array_merge($arrAddGroups, $this->resolveGroupIds($groupsReceived));
 
-            if (!empty($arrAutoGroups) && \is_array($arrAutoGroups)) {
-                foreach ($arrAutoGroups as $groupId) {
+            if (!empty($arrAddGroups) && \is_array($arrAddGroups)) {
+                foreach ($arrAddGroups as $groupId) {
                     if (!\in_array($groupId, $arrGroups, false)) {
                         $arrGroups[] = $groupId;
                     }
                 }
 
-                $set['groups'] = serialize($arrGroups);
+
+
+                $set['`groups`'] = serialize($arrGroups);
             }
 
             // Set random password
@@ -272,26 +263,16 @@ class ContaoUser
         if (null !== $objUser) {
             // Correctly format the section ids (the key is important!): e.g. [0 => '4250', 2 => '4252'] -> user is member of two SAC Sektionen/Ortsgruppen
             $arrSectionIdsUserIsAllowed = array_map('strval', $this->resourceOwnerChecker->getAllowedSacSectionIds($this->resourceOwner, ContaoCoreBundle::SCOPE_BACKEND));
-            $arrSectionIdsAll = array_map('strval', array_keys($this->util->listSacSections()));
+//            $arrSectionIdsAll = array_map('strval', array_keys($this->util->listSacSections()));
+            $arrSectionIdsAll = [];
             $arrSectionIds = array_filter($arrSectionIdsAll, static fn ($v, $k) => \in_array($v, $arrSectionIdsUserIsAllowed, true), ARRAY_FILTER_USE_BOTH);
 
             $set = [
                 // Be sure to set the correct data type!
                 // Otherwise, the record will be updated
                 // due to wrong type cast only.
-                'mobile' => $this->beautifyPhoneNumber($this->resourceOwner->getPhoneMobile()),
-                'phone' => $this->beautifyPhoneNumber($this->resourceOwner->getPhonePrivate()),
-                'uuid' => $this->resourceOwner->getId(),
-                'lastname' => $this->resourceOwner->getLastName(),
-                'firstname' => $this->resourceOwner->getFirstName(),
                 'name' => $this->resourceOwner->getFullName(),
-                'street' => $this->resourceOwner->getStreet(),
-                'city' => $this->resourceOwner->getCity(),
-                'postal' => $this->resourceOwner->getPostal(),
-                'dateOfBirth' => false !== strtotime($this->resourceOwner->getDateOfBirth()) ? (string) strtotime($this->resourceOwner->getDateOfBirth()) : '0',
-                'gender' => 'HERR' === $this->resourceOwner->getSalutation() ? 'male' : 'female',
                 'email' => $this->resourceOwner->getEmail(),
-                'sectionId' => serialize($arrSectionIds),
             ];
 
             // Set random password
@@ -408,19 +389,17 @@ class ContaoUser
      */
     private function createFrontendUserIfNotExists(): void
     {
-        $sacMemberId = $this->resourceOwner->getSacMemberId();
+        $memberId = $this->resourceOwner->getId();
 
-        if (!$this->isValidUsername($sacMemberId)) {
+        if (!$this->isValidUsername($memberId)) {
             return;
         }
 
         if (null === $this->getModel('tl_member')) {
             $set = [
-                'username' => $sacMemberId,
-                'sacMemberId' => $sacMemberId,
-                'uuid' => $this->resourceOwner->getId(),
+                'username' => $memberId,
                 'dateAdded' => time(),
-                'tstamp' => $sacMemberId,
+                'tstamp' => time(),
             ];
 
             $this->connection->insert('tl_member', $set);
@@ -428,4 +407,21 @@ class ContaoUser
             $this->updateFrontendUser();
         }
     }
+
+    private function resolveGroupIds(array $groupsReceived): array
+    {
+        $ids = [];
+
+        foreach($groupsReceived as $groupName) {
+            $model = MemberGroupModel::findByName($groupName);
+            if ($model === null) {
+                continue;
+            }
+
+            $ids[] = $model->id;
+        }
+
+        return $ids;
+    }
+
 }

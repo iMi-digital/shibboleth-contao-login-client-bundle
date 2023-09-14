@@ -1,6 +1,12 @@
 MIT License
 
+Copyright (c) 2023 iMi digital GmbH
+
+Based on original Swiss Alpline Club Contao Login Client bundle:
 Copyright (c) 2020 Marko Cupic
+
+Contains test code from Contao Framework and
+https://github.com/terminal42/contao-changelanguage
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

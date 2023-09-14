@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Swiss Alpine Club Contao Login Client Bundle.
+ * This file is part of Shibboleth Contao Login Client Bundle.
  *
  * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
  * @license MIT
@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/swiss-alpine-club-contao-login-client-bundle
  */
 
-namespace Markocupic\SwissAlpineClubContaoLoginClientBundle\ContaoManager;
+namespace iMi\ContaoShibbolethLoginClientBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
@@ -21,7 +21,7 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ConfigPluginInterface;
 use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
 use Markocupic\SacEventToolBundle\MarkocupicSacEventToolBundle;
-use Markocupic\SwissAlpineClubContaoLoginClientBundle\MarkocupicSwissAlpineClubContaoLoginClientBundle;
+use iMi\ContaoShibbolethLoginClientBundle\ContaoShibbolethLoginClientBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -34,9 +34,8 @@ class Plugin implements ConfigPluginInterface, BundlePluginInterface, RoutingPlu
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create(MarkocupicSwissAlpineClubContaoLoginClientBundle::class)
-                ->setLoadAfter([ContaoCoreBundle::class])
-                ->setLoadAfter([MarkocupicSacEventToolBundle::class]),
+            BundleConfig::create(ContaoShibbolethLoginClientBundle::class)
+                ->setLoadAfter([ContaoCoreBundle::class]),
         ];
     }
 
@@ -45,7 +44,7 @@ class Plugin implements ConfigPluginInterface, BundlePluginInterface, RoutingPlu
      */
     public function registerContainerConfiguration(LoaderInterface $loader, array $config): void
     {
-        $loader->load('@MarkocupicSwissAlpineClubContaoLoginClientBundle/config/config.yaml');
+        $loader->load('@ContaoShibbolethLoginClientBundle/config/config.yaml');
     }
 
     /**
