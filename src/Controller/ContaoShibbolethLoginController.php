@@ -41,7 +41,7 @@ class ContaoShibbolethLoginController extends AbstractController
         $this->framework->initialize(ContaoCoreBundle::SCOPE_FRONTEND === $_scope);
 
         if (!$request->server->has('REDIRECT_unscoped-affiliation')) {
-            throw new \iMi\ContaoShibbolethLoginClientBundle\Client\Exception\InvalidStateException('Required field missing');
+            throw new \iMi\ContaoShibbolethLoginClientBundle\Client\Exception\InvalidStateException('Required field missing, reason can be a configuration problem in the webserver.');
         }
 
         return $this->getAccessTokenAction($request, $_scope);
