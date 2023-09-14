@@ -41,7 +41,7 @@ class KernelRequestSubscriber implements EventSubscriberInterface
 
         if ($this->scopeMatcher->isBackendRequest($request)) {
             if (str_contains($request->getUri(), $this->router->generate('contao_backend_login'))) {
-                $GLOBALS['TL_CSS'][] = 'bundles/contaoshibbolethloginclient/css/backend.min.css';
+                $GLOBALS['TL_CSS'][] = 'bundles/contaoshibbolethloginclient/css/backend.css';
             }
         }
     }
