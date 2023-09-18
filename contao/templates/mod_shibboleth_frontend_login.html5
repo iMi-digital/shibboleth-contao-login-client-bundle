@@ -1,9 +1,42 @@
+<?php
+
+use Contao\StringUtil;
+
+?>
 <!-- indexer::stop -->
 <div class="mod_login <?= $this->class ?> <?= $this->logout ? 'logout' : 'login' ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
 
 <?php if ($this->headline): ?>
 <<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
 <?php endif; ?>
+
+<?php if ($this->error): ?>
+    <div class="trigger-ids-kill-session shibboleth-error error alert d-flex flex-column alert-<?= $this->error['bs-alert-class'] ?> mt-4 pt-4">
+        <?php if ('' != $this->error['matter']): ?>
+            <div class="error-matter-box mb-3">
+                <h6 class="error-title mt-0"><?= $this->trans('MSC.'.$this->error['level'].'Matter', [], 'contao_default') ?></h6>
+                <p class="error-matter small"><?= $this->error['matter'] ?></p>
+            </div>
+        <?php endif; ?>
+
+        <?php if ('' != $this->error['howToFix']): ?>
+            <div class="error-how-to-fix-box mb-3">
+                <h6 class="error-title mt-0"><?= $this->trans('MSC.errorHowToFix', [], 'contao_default') ?></h6>
+                <p class="error-how-to-fix small"><?= $this->error['howToFix'] ?></p>
+            </div>
+        <?php endif; ?>
+
+        <?php if ('' != $this->error['explain']): ?>
+            <div class="error-explain-box mb-3">
+                <h6 class="error-title mt-0"><?= $this->trans('MSC.errorExplain', [], 'contao_default') ?></h6>
+                <p class="error-explain small"><?= $this->error['explain'] ?></p>
+            </div>
+        <?php endif; ?>
+
+        <a href="/Shibboleth.sso/Logout"><?php echo StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['logoutFromShibbolethIdp']) ?></a>
+    </div>
+<?php endif; ?>
+
 
 <?php if ($this->login): ?>
 <form action="/Shibboleth.sso/Login" id="shibbolethLoginFe_<?= $this->id ?>" class="shibboleth-login-fe" method="get">
@@ -13,35 +46,22 @@
   </div>
 </form>
 
-<?php if ($this->error): ?>
-<div class="trigger-ids-kill-session shibboleth-error error alert d-flex flex-column alert-<?= $this->error['bs-alert-class'] ?> mt-4">
-
-  <?php if ('' != $this->error['matter']): ?>
-  <div class="error-matter-box mb-3">
-    <h6 class="error-title mt-0"><?= $this->trans('MSC.'.$this->error['level'].'Matter', [], 'contao_default') ?></h6>
-    <p class="error-matter small"><?= $this->error['matter'] ?></p>
-  </div>
-  <?php endif; ?>
-
-  <?php if ('' != $this->error['howToFix']): ?>
-  <div class="error-how-to-fix-box mb-3">
-    <h6 class="error-title mt-0"><?= $this->trans('MSC.errorHowToFix', [], 'contao_default') ?></h6>
-    <p class="error-how-to-fix small"><?= $this->error['howToFix'] ?></p>
-  </div>
-  <?php endif; ?>
-
-  <?php if ('' != $this->error['explain']): ?>
-  <div class="error-explain-box mb-3">
-    <h6 class="error-title mt-0"><?= $this->trans('MSC.errorExplain', [], 'contao_default') ?></h6>
-    <p class="error-explain small"><?= $this->error['explain'] ?></p>
-  </div>
-  <?php endif; ?>
-
-</div>
-<?php endif; ?>
-
 <?php else: ?>
 <p class="login_info"><?= $this->loggedInAs ?><br><?= $this->lastLogin ?></p>
+
+<form<?php if ($this->action): ?> action="<?= $this->action ?>"<?php endif; ?> method="post">
+    <div class="formbody">
+        <?php if ($this->message): ?>
+            <p class="error"><?php echo $this->message; ?></p>
+        <?php endif; ?>
+        <input type="hidden" name="FORM_SUBMIT" value="<?php if(version_compare(VERSION,"4",">=")): ?><?= $this->formId ?><?php else: ?>tl_login<?php endif; ?>">
+        <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+        <input type="hidden" name="_target_path" value="<?= $this->targetPath ?>">
+        <div class="submit_button">
+            <input type="submit" class="submit" value="<?php echo StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['logout']) ?>">
+        </div>
+    </div>
+</form>
 <?php endif; ?>
 
 </div>

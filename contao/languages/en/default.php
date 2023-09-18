@@ -16,6 +16,7 @@ declare(strict_types=1);
  * Miscellaneous
  */
 $GLOBALS['TL_LANG']['MSC']['loginWithShibbolethSso'] = 'Log in with Shibboleth';
+$GLOBALS['TL_LANG']['MSC']['logoutFromShibbolethIdp'] = 'Log out from Shibboleth Identity Provider';
 
 // Error management
 $GLOBALS['TL_LANG']['MSC']['infoMatter'] = 'Information';
@@ -38,7 +39,7 @@ $GLOBALS['TL_LANG']['ERR']['shibbolethLoginError_backendUserNotFound_howToFix'] 
 $GLOBALS['TL_LANG']['ERR']['shibbolethLoginError_backendUserNotFound_explain'] = '';
 
 $GLOBALS['TL_LANG']['ERR']['shibbolethLoginError_userIsNotMemberOfAllowedSection_matter'] = 'Hello %s.{{br}}Unfortunately, your login attempt did not work because you do not appear to be a member of the respective groups.';
-$GLOBALS['TL_LANG']['ERR']['shibbolethLoginError_userIsNotMemberOfAllowedSection_howToFix'] = 'Contact the administrator / the Identity Provider.';
+$GLOBALS['TL_LANG']['ERR']['shibbolethLoginError_userIsNotMemberOfAllowedSection_howToFix'] = 'Contact the administrator / the Identity Provider or login with another user after you logged out from the identify provider.';
 $GLOBALS['TL_LANG']['ERR']['shibbolethLoginError_userIsNotMemberOfAllowedSection_explain'] = '';
 
 $GLOBALS['TL_LANG']['ERR']['shibbolethLoginError_invalidEmail_matter'] = 'Hello %s{{br}}Unfortunately, the verification of your data transmitted to us by the Identity Provider has failed.';

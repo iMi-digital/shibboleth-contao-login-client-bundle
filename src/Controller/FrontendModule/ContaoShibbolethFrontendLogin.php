@@ -68,6 +68,8 @@ class ContaoShibbolethFrontendLogin extends AbstractFrontendModuleController
         if (($user = $this->security->getUser()) instanceof FrontendUser) {
             $template->loggedInAs = $this->translator->trans('MSC.loggedInAs', [$user->username], 'contao_default');
             $template->username = $user->username;
+            $template->action = $systemAdapter->getContainer()->get('security.logout_url_generator')->getLogoutPath();
+            $template->targetPath = StringUtil::specialchars('/Shibboleth.sso/Logout');
             $template->logout = true;
         } else {
             $strRedirect = $environmentAdapter->get('base').$environmentAdapter->get('request');
