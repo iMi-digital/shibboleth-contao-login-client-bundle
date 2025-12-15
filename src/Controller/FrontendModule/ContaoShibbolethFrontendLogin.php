@@ -23,7 +23,7 @@ use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
-use Contao\Template;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use JustSteveKing\UriBuilder\Uri;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -47,7 +47,7 @@ class ContaoShibbolethFrontendLogin extends AbstractFrontendModuleController
     ) {
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response|null
+    protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
         /** @var Environment $environmentAdapter */
         $environmentAdapter = $this->framework->getAdapter(Environment::class);
