@@ -56,7 +56,7 @@ use Contao\StringUtil;
             <p class="error"><?php echo $this->message; ?></p>
         <?php endif; ?>
         <input type="hidden" name="FORM_SUBMIT" value="<?php if(version_compare(ContaoCoreBundle::getVersion(),"4",">=")): ?><?= $this->formId ?><?php else: ?>tl_login<?php endif; ?>">
-        <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+        <input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
         <input type="hidden" name="_target_path" value="<?= $this->targetPath ?>">
         <div class="submit_button">
             <input type="submit" class="submit" value="<?php echo StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['logout']) ?>">
