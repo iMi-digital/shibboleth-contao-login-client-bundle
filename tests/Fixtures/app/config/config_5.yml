@@ -13,11 +13,26 @@ framework:
     csrf_protection: ~
     default_locale: '%locale%'
     session:
-        storage_factory_id: session.storage.factory.mock_file
         handler_id: ~
+        storage_factory_id: session.storage.factory.mock_file
+        cookie_secure: true
+        cookie_samesite: lax
     fragments: { path: /_fragment }
+    http_method_override: false
+    php_errors:
+        log: true
+    uid:
+        default_uuid_version: 7
+        time_based_uuid_version: 7
+    annotations:
+        enabled: false
+    handle_all_throwables: true
 
 security:
+    password_hashers:
+        Contao\User: auto
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: auto
+
     providers:
         contao.security.backend_user_provider:
             id: contao.security.backend_user_provider
@@ -25,20 +40,18 @@ security:
         contao.security.frontend_user_provider:
             id: contao.security.frontend_user_provider
 
-    password_hashers:
-        Contao\User: auto
-
     firewalls:
-        contao_install:
-            pattern: ^%contao.backend.route_prefix%/install$
-            security: false
-
         contao_backend:
             request_matcher: contao.routing.backend_matcher
             provider: contao.security.backend_user_provider
             user_checker: contao.security.user_checker
-            anonymous: ~
             switch_user: true
+            login_throttling: ~
+
+            login_link:
+                check_route: contao_backend_login_link
+                signature_properties: [username, lastLogin]
+                success_handler: contao.security.authentication_success_handler
 
             contao_login:
                 remember_me: false
@@ -50,8 +63,9 @@ security:
             request_matcher: contao.routing.frontend_matcher
             provider: contao.security.frontend_user_provider
             user_checker: contao.security.user_checker
-            anonymous: ~
+            access_denied_handler: contao.security.access_denied_handler
             switch_user: false
+            login_throttling: ~
 
             contao_login:
                 remember_me: true
@@ -93,10 +107,11 @@ doctrine:
         auto_generate_proxy_classes: true
 
 contao:
-    legacy_routing: false
     localconfig:
         licenseAccepted: true
         disableCron: true
+    cron:
+        web_listener: false
     search:
         default_indexer:
             enable: false
