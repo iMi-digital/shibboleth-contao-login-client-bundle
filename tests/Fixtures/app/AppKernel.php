@@ -68,11 +68,14 @@ class AppKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
-        $loader->load(__DIR__.'/config/config_4.yml');
+        $loader->load(__DIR__.'/config/config_5.yml');
     }
 
     protected function build(ContainerBuilder $container): void
     {
         $container->register('monolog.logger.contao', NullLogger::class);
+        $container->register('monolog.logger.contao.email', NullLogger::class);
+        $container->register('monolog.logger.contao.error', NullLogger::class);
+        $container->register('monolog.logger.contao.cron', NullLogger::class);
     }
 }
