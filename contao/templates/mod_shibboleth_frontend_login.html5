@@ -1,5 +1,6 @@
 <?php
 
+use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\StringUtil;
 
 ?>
@@ -54,7 +55,7 @@ use Contao\StringUtil;
         <?php if ($this->message): ?>
             <p class="error"><?php echo $this->message; ?></p>
         <?php endif; ?>
-        <input type="hidden" name="FORM_SUBMIT" value="<?php if(version_compare(VERSION,"4",">=")): ?><?= $this->formId ?><?php else: ?>tl_login<?php endif; ?>">
+        <input type="hidden" name="FORM_SUBMIT" value="<?php if(version_compare(ContaoCoreBundle::getVersion(),"4",">=")): ?><?= $this->formId ?><?php else: ?>tl_login<?php endif; ?>">
         <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
         <input type="hidden" name="_target_path" value="<?= $this->targetPath ?>">
         <div class="submit_button">
