@@ -312,7 +312,7 @@ class ContaoUser
     public function enableLogin(): void
     {
         if (($model = $this->getModel()) !== null) {
-            $model->disable = '';
+            $model->disable = 0;
             $model->save();
             $model->refresh();
         }
