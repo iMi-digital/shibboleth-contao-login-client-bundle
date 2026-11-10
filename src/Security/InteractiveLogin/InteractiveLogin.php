@@ -30,7 +30,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class InteractiveLogin
@@ -77,7 +77,7 @@ class InteractiveLogin
 
         // Check if username is valid
         // Security::MAX_USERNAME_LENGTH = 4096;
-        if (\strlen($userIdentifier) > Security::MAX_USERNAME_LENGTH) {
+        if (\strlen($userIdentifier) > UserBadge::MAX_USERNAME_LENGTH) {
             throw new \Exception('Invalid username.');
         }
 

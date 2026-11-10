@@ -1,4 +1,4 @@
 shibboleth_sso_auth:
   resource: ../src/Controller
-  type: annotation
+  type: attribute
 

@@ -30,7 +30,7 @@ use iMi\ContaoShibbolethLoginClientBundle\ErrorMessage\ErrorMessageManager;
 use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUser;
 use iMi\ContaoShibbolethLoginClientBundle\Security\Auth\AuthUserChecker;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ContaoUser
@@ -299,7 +299,7 @@ class ContaoUser
 
         // Check if username is valid
         // Security::MAX_USERNAME_LENGTH = 4096;
-        if (\strlen($username) > Security::MAX_USERNAME_LENGTH) {
+        if (\strlen($username) > UserBadge::MAX_USERNAME_LENGTH) {
             return false;
         }
 
