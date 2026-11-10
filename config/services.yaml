@@ -6,7 +6,7 @@ services:
     iMi\ContaoShibbolethLoginClientBundle\:
         resource: ../src/
         exclude: [
-            ../src/{ DependencyInjection,Model,Event,Session,Exception },
+            '../src/{DependencyInjection,Model,Event,Session,Exception}',
             ../src/Client/Provider/SwissAlpineClub.php,
             ../src/Client/OAuth2Client.php,
             ../src/Security/OAuth/OAuthUser.php,
